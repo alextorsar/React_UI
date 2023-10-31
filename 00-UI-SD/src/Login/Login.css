@@ -1,0 +1,13 @@
+.LoginDiv{
+  width: 80%;
+  margin: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+Button{
+  margin-left: auto;
+  margin-top: 5%;
+}
