@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Card, CardBody, Image, Stack, Heading, Divider, CardFooter, Button} from '@chakra-ui/react'
 import { useState } from 'react'
-import { selectedModelsContext } from '../../main.jsx'
+import { selectedModelsContext } from '../../logged.jsx'
 
 
 export function ModelCard({modelName, imageName}){

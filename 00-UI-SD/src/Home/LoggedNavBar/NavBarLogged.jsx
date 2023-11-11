@@ -4,7 +4,7 @@ import { MainMenu } from './MainMenu'
 export function NavBarLogged({name}){
     return(
         <>
-        <Flex width="100%" height= "100%"padding="2.5%" color="blue.500" alignItems='center' gap='2' bg="#D6E6F9">
+        <Flex width="100%" height="15%" padding="2.5%" color="blue.500" alignItems='center' gap='2' bg="#D6E6F9">
             <Image
                 src="/src/images/logoUPM.png"
                 alt='Logo UPM'

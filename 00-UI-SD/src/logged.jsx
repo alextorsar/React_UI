@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 import ReactDOM from 'react-dom/client'
-import {ChakraProvider, Divider, Flex} from '@chakra-ui/react'
+import {ChakraProvider, Flex} from '@chakra-ui/react'
 import {NavBarLogged} from './Home/LoggedNavBar/NavBarLogged'
 import { ModelCardGrid } from './Home/ModelCards/ModelCardGrid'
 import { ModelsSection } from './Home/ModelsSection/ModelsSection'
@@ -16,7 +16,7 @@ function App(){
   return(
     <React.StrictMode>
       <ChakraProvider>
-        <Flex flexDirection="column" width="100%" justifyContent="center" alignItems="center">
+        <Flex flexDirection="column" width="100%" justifyContent="center" alignItems="center" backgroundColor="#F2F2F2">
             <NavBarLogged name="Alex"></NavBarLogged>
             <selectedModelsContext.Provider value={{selectedModels, setSelectedModels}}>
               <ModelsSection></ModelsSection>

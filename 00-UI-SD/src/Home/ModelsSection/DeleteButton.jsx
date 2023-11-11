@@ -1,6 +1,6 @@
 import {DeleteIcon} from '@chakra-ui/icons'
 import { Button, useDisclosure,Modal, ModalOverlay,ModalContent, ModalHeader, ModalCloseButton, ModalBody,ModalFooter } from '@chakra-ui/react'
-import { selectedModelsContext } from '../../main'
+import { selectedModelsContext } from '../../logged.jsx'
 import { useContext} from 'react'
 
 
