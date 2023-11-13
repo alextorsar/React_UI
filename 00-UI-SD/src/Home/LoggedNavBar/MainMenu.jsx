@@ -9,13 +9,30 @@ import {
     DrawerBody,
     useDisclosure,
     ButtonGroup
-  } from '@chakra-ui/react' 
+} from '@chakra-ui/react' 
 import {
     HamburgerIcon
 } from '@chakra-ui/icons'
+import {postLogOut} from '../../../api/users-api'
+import { useNavigate} from "react-router-dom";
 
 export function MainMenu(){
+
+    const navigate = useNavigate()
+
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    function onLogOutClick() {
+        postLogOut().then(
+          (response) => {
+            if (response.status === 200){
+                navigate("/login");
+            }else{
+              console.log(response)
+            }
+          }
+        )
+      }
 
     return(
         <>
@@ -38,7 +55,7 @@ export function MainMenu(){
                             <Button variant='ghost' width="100%">
                                 Account
                             </Button>
-                            <Button variant='ghost' width = "100%" color="red">
+                            <Button variant='ghost' width = "100%" color="red" onClick={onLogOutClick}>
                                 Log out
                             </Button>
                         </ButtonGroup>

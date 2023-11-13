@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Card, CardBody, Image, Stack, Heading, Divider, CardFooter, Button} from '@chakra-ui/react'
 import { useState } from 'react'
-import { selectedModelsContext } from '../../logged.jsx'
+import { selectedModelsContext } from '../Logged'
 
 
 export function ModelCard({modelName, imageName}){
@@ -22,7 +22,7 @@ export function ModelCard({modelName, imageName}){
     }
 
     return (
-        <Card cursor="pointer" size='lg' variant= "filled"  border={isSelected ? "2px" : "none"}  borderColor="blue" onClick={handleClick}>
+        <Card cursor="pointer" size='lg' bg="#D6E6F9" border={isSelected ? "2px" : "none"}  borderColor="blue" onClick={handleClick}>
             <CardBody >
                 <Image
                     src={route}

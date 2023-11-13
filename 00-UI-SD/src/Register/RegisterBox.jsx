@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { postUser } from '../../api/users-api'
+import { Link, useNavigate } from "react-router-dom";
 
 import {
     FormControl,
     FormLabel,
     Input,
     Button,
-    Box,
     Heading,
     Text,
     VStack
@@ -18,20 +19,23 @@ import {
 
 
 export function RegisterBox() {
+    const navigate = useNavigate();
     const {
         handleSubmit,
         register,
-        watch,
-        formState: { errors },
       } = useForm()
 
       function onSubmit(values) {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            resolve()
-          }, 0)
-        })
+        
+        postUser(values).then(
+            (response) => {
+                if (response.status === 200){
+                    navigate("/login");
+                }else{
+                    console.log(response)
+                }
+            }
+        )
       }
       
     return (
@@ -75,7 +79,7 @@ export function RegisterBox() {
                     </FormControl>
                     <Button  type="submit" width="35%" height="70%" colorScheme='messenger' alignSelf="center" justifySelf="flex-start" borderRadius="25px" marginTop="10%">Sign Up</Button>
                     </form>
-                    <Text marginTop="auto" marginBottom="5%">Already have an account? <a href='index.html'><b>Log In</b></a></Text>
+                    <Text marginTop="auto" marginBottom="5%">Already have an account? <Link to='/login'><b>Log In</b></Link></Text>
                 </VStack> 
         </VStack>
 

@@ -1,8 +1,9 @@
 import './Login.css'
 import './LoginBox.css'
-
+import { Link, useNavigate} from "react-router-dom";
 import React from 'react'
 import {PasswordInput} from "./PassworInput"
+import {postLogin} from '../../api/users-api'
 import {
   FormControl,
   FormLabel,
@@ -18,18 +19,23 @@ import { useForm } from 'react-hook-form'
 
 export function LoginBox() {
 
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
   } = useForm()
 
   function onSubmit(values) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2))
-        resolve()
-      }, 0)
-    })
+    postLogin(values).then(
+      (response) => {
+        if (response.status === 200){
+          navigate("/logged");
+        }else{
+          console.log(response)
+        }
+      }
+    )
   }
 
   return (
@@ -54,7 +60,7 @@ export function LoginBox() {
           </FormControl>
           <Button type="submit" width="35%" colorScheme='messenger' alignSelf="center" justifySelf="center" margin="10%" borderRadius="25px">Log in</Button>
         </form>
-        <Text>Don't have an account? <a href='register.html'><b>Sign Up</b></a></Text>
+        <Text>Don't have an account? <Link to="/register"><b>Sign Up</b></Link></Text>
       </div>
     </Box>
   )
