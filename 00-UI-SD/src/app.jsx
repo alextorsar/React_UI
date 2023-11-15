@@ -3,6 +3,7 @@ import { Login } from "./Login/Login"
 import { Register } from "./Register/Register"
 import { Logged } from "./Home/Logged"
 import ReactDOM from 'react-dom/client'
+import "./index.css"
 
 function App() {
     return (

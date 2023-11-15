@@ -12,30 +12,40 @@ import {
   Box,
   Heading,
   Image,
-  Text
+  Text,
+  useToast
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 
 
+
 export function LoginBox() {
+
+  const toast = useToast()
 
   const navigate = useNavigate();
 
   const {
     handleSubmit,
+    formState,
     register,
   } = useForm()
 
+  const { errors } = formState
+
   function onSubmit(values) {
-    postLogin(values).then(
+    const promise = postLogin(values).then(
       (response) => {
         if (response.status === 200){
           navigate("/logged");
-        }else{
-          console.log(response)
         }
       }
     )
+    promise.catch(() => {
+      toast.promise(promise, {
+        error: { title: 'Login failed', description: "User or password incorrect", duration: 2500,isClosable: true}
+      })
+    })
   }
 
   return (
@@ -52,11 +62,14 @@ export function LoginBox() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl>
             <FormLabel htmlFor='email'>Email address</FormLabel>
-            <Input type='email' placeholder="Enter email" bg="white" {...register('email')}/>
+            <Input type='email' id='email' placeholder={errors.email?.message} _placeholder={{ color: 'red' }}bg="white" {...register('email',{required: "Email is required." })}/>
           </FormControl>
           <FormControl>
           <FormLabel htmlFor='password'>Password</FormLabel>
-            <PasswordInput field={'password'} register={register}></PasswordInput>
+            <PasswordInput
+              register={register('password',{required: "Password is required." })} 
+              errors={errors.password}
+            ></PasswordInput>
           </FormControl>
           <Button type="submit" width="35%" colorScheme='messenger' alignSelf="center" justifySelf="center" margin="10%" borderRadius="25px">Log in</Button>
         </form>
