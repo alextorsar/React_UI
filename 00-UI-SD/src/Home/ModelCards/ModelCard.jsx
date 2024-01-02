@@ -28,7 +28,7 @@ export function ModelCard({model}){
     }
 
     return (
-        <Card cursor="pointer" size='lg' width="100%" bg="#D6E6F9" border={isSelected ? "2px" : "none"}  borderColor="blue" onClick={handleCardClick}>
+        <Card cursor="pointer" size='lg' width="100%" bg="#D6E6F9" border={isSelected ? "2px" : "none"}  borderColor="blue" onClick={handleCardClick} display="flex" alignContent="center">
             <CardBody >
                 <Image
                     src={route}

@@ -5,6 +5,7 @@ import {
   useNavigate
 } from "react-router-dom";
 import { ChakraProvider, Stack, Image, Heading, Flex, Button, ButtonGroup } from "@chakra-ui/react";
+import { ModelVariablesTable } from "./ModelVariablesTable";
 
 export function Model() {
   var data = [
@@ -15,20 +16,13 @@ export function Model() {
     const navigate = useNavigate()
     const modelId = useParams().modelId
     const [model,setModel] = useState(null)
-    const [documentation,setDocumentation] = useState(null)
+    
     var src = ""
     useEffect( () => {
       getModel(modelId).then(
         (response) => {
           if(response.status === 200){
             setModel(response.data)
-            getModelDocumentation(modelId).then(
-              (response) => {
-                if(response.status === 200){
-                  setDocumentation(response.data)
-                }
-              }
-            )
           }
         }
         ).catch((e) => {
@@ -41,7 +35,7 @@ export function Model() {
     return (
     <React.StrictMode>
       <ChakraProvider>
-        <Stack height="100%" width="100%" direction="row" display="flex" justifyContent="center" margin="2.5%">
+        <Stack height="100%" width="100%" direction="column" display="flex" alignItems="center" margin="2.5%">
             <Flex height = "35%" width="80%" direction="row" alignContent="center" justifyContent="center">
               {
                 model ?
@@ -65,7 +59,7 @@ export function Model() {
                 <></>
               }
             </Flex>
-            
+            <ModelVariablesTable modelId={modelId}></ModelVariablesTable>
           </Stack>
         </ChakraProvider>
       </React.StrictMode>

@@ -8,10 +8,8 @@ COPY package-lock.json .
 
 RUN npm install
 
-RUN npm install react-hook-form
-
 COPY . .
 
-EXPOSE 5173
+RUN npm install
 
-CMD [ "npm", "run", "dev"]
+EXPOSE 5173
