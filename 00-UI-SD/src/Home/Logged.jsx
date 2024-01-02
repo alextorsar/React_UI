@@ -4,6 +4,7 @@ import {NavBarLogged} from './LoggedNavBar/NavBarLogged'
 import { ModelCardGrid } from './ModelCards/ModelCardGrid'
 import { ModelsSection } from './ModelsSection/ModelsSection'
 import { getUser } from '../../api/users-api'
+import { getModels } from '../../api/models-api'
 import { useNavigate} from "react-router-dom";
 
 
@@ -15,6 +16,8 @@ export const selectedModelsContext = createContext()
 
 export function Logged(){
   const [user,setUser] = useState({})
+  const [models,setModels] = useState([])
+  const [selectedModels, setSelectedModels] = useState([])
   const navigate = useNavigate()
 
   useEffect(
@@ -27,16 +30,23 @@ export function Logged(){
           }
         ).catch(() => {
           navigate("/login")
-        }); 
+        });
+        getModels().then(
+          (response) => {
+            if(response.status === 200){
+              setModels(response.data)
+            }
+          }
+        )
     }, []
   )
-  const [selectedModels, setSelectedModels] = useState([])
+  
   return(
     <React.StrictMode>
       <ChakraProvider>
-        <Flex flexDirection="column" width="100%" justifyContent="center" alignItems="center" backgroundColor="#F2F2F2">
+        <Flex flexDirection="column" width="100%" justifyContent="center" alignItems="center" backgroundColor="white">
             <NavBarLogged name={user.name}></NavBarLogged>
-            <selectedModelsContext.Provider value={{selectedModels, setSelectedModels}}>
+            <selectedModelsContext.Provider value={{selectedModels, setSelectedModels, models, setModels}}>
               <ModelsSection></ModelsSection>
               <ModelCardGrid></ModelCardGrid>
             </selectedModelsContext.Provider>
