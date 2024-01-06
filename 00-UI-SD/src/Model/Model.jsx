@@ -46,6 +46,7 @@ export function Model() {
                     borderRadius='lg'
                     height="80%"
                     alignSelf="center"
+                    boxShadow='lg'
                 />
                 <Stack height="20%" direction="column" display="flex" justifyContent="center" alignContent="center" width="60%" alignSelf="center">
                   <Heading alignSelf="center" size='lg'>{model.name}</Heading>
