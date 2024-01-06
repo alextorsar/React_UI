@@ -29,12 +29,14 @@ export function ModelCard({model}){
 
     return (
         <Card cursor="pointer" size='lg' width="100%" bg="#D6E6F9" border={isSelected ? "2px" : "none"}  borderColor="blue" onClick={handleCardClick} display="flex" alignContent="center">
-            <CardBody >
+            <CardBody  display="flex" flexDirection="column">
                 <Image
+                    marginTop="3%"
                     src={route}
                     alt='Model photo'
                     borderRadius='lg'   
                     height="80%"
+                    alignSelf="center"
                 />
                 <Stack mt='6' spacing='3'>
                 <Heading size='md'>{model.name}</Heading>
