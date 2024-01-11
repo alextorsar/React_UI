@@ -11,7 +11,7 @@ export function Uploader({name,register,setValue}) {
         imageInput = false
     }
     return  (
-        <div className='uploaderBox' width = "50%" height="100%" onClick={() => {document.getElementById(name).click()}}>
+        <div className='uploaderBox' onClick={() => {document.getElementById(name).click()}}>
             <Input
                 id={name}
                 type="file"
@@ -26,21 +26,21 @@ export function Uploader({name,register,setValue}) {
                 hidden
             />
             {file ?
-                <>
+                <Stack display= "flex "direction="column" alignItems="center" height="100%" minHeight="100%" maxHeight="100%">
                 {
                     imageInput ?
                     <Image src={file} alignSelf="center" height= "60%" marginTop="5%" objectFit="cover"/>
                     :
                     <Image src="/src/images/panel-escrito.png" height= "70%" marginTop="5%" objectFit="cover"/>
                 }
-                <Stack direction="row" alignItems="center" marginTop="auto">
-                    <Text>{fileName}</Text>
-                    <MdDelete onClick={ () => {
-                        setFile(null)
-                        setFileName("No selected file")
-                    }}/>
+                    <Stack direction="row" alignItems="center" marginTop="auto">
+                        <Text isTruncated>{fileName}</Text>
+                        <MdDelete onClick={ () => {
+                            setFile(null)
+                            setFileName("No selected file")
+                        }}/>
+                    </Stack>
                 </Stack>
-                </>
                 :
                 <>
                     <MdCloudUpload color="#0078ff" size="40%"/>

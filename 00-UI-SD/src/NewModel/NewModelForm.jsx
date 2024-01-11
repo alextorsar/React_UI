@@ -88,20 +88,20 @@ export function NewModelForm({ isOpen, onClose }) {
                 </FormControl>
                 <Stack height="30%" minHeight="30%" maxHeight="30%" width="95%" direction="row" >
                   <FormControl display="flex" flexDirection="column" alignItems="center">
-                    <FormLabel htmlFor="image">Model Image</FormLabel>
-                    <Uploader name="image" register={register} setValue={setValue} />
+                    <FormLabel height="15%" minHeight="15%" maxHeight="15%" htmlFor="image">Model Image</FormLabel>
+                    <Uploader height="85%" minHeight="85%" maxHeight="85%" name="image" register={register} setValue={setValue} />
                   </FormControl>
                   <FormControl display="flex" flexDirection="column" alignItems="center">
-                    <FormLabel htmlFor="file">Model File</FormLabel>
-                    <Uploader name="file" register={register} setValue={setValue} />
+                    <FormLabel height="15%" minHeight="15%" maxHeight="15%" htmlFor="file">Model File</FormLabel>
+                    <Uploader height="85%" minHeight="85%" maxHeight="85%" name="file" register={register} setValue={setValue} />
                   </FormControl>
                 </Stack>
-                <FormControl  marginTop="3%" height="30%" minHeight="30%" maxHeight="30%" display="flex" flexDirection="column" alignItems="center">
+                <FormControl  marginTop="5%" height="30%" minHeight="30%" maxHeight="30%" display="flex" flexDirection="column" alignItems="center">
                   <FormLabel htmlFor="file">Submodels</FormLabel>
                   <MultipleUploader name="submodels" register={register}/>
                 </FormControl>
                 <Stack
-                  height="17%"
+                  height="15%"
                   minHeight="17%"
                   maxHeight="17%"
                   direction="row"
