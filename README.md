@@ -3,6 +3,9 @@
 ## Installation
 Before isntalling this client you must have installed the server: https://github.com/alextorsar/API-Users
 
-In order to use de UI go to 00-UI-SD directory. Then execute .\createImageAndContainer.bat to create the docker image and run a container with that image, whose name is 'front'.
+In order to use de UI go to 00-UI-SD directory. Then execute:
+
+- npm install
+- npm run dev
 
 After that you will be able to access the website through the url: http://localhost:5173
