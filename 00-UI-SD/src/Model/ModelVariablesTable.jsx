@@ -35,8 +35,8 @@ export function ModelVariablesTable({modelId}){
         {
             documentation ?
             <>
-                <TableContainer  boxShadow="lg" height="65%" width="70%" borderRadius="10px">
-                    <Table variant='simple' width="100%" colorScheme="messenger" >
+                <TableContainer  boxShadow="lg" height="65%" width="80%" borderRadius="10px">
+                    <Table variant='unstyled' width="100%" colorScheme="messenger" >
                         <TableCaption>Model Variables</TableCaption>
                         <Thead bgColor="#0078FF">
                         <Tr>

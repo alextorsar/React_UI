@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useContext } from 'react'
+import { MultipleUploader } from './MultipleUploader'
 import {
   Button,
   Modal,
@@ -29,10 +30,11 @@ const theme = extendTheme({
     Modal: {
       baseStyle: (props) => ({
         dialog: {
+          height: '85%',
           maxWidth: ['65%', '65%', '65%'],
           minWidth: '65%',
-          maxHeight: ['55%', '55%', '55%'],
-          minHeight: '55%',
+          maxHeight: ['85%', '85%', '85%'],
+          minHeight: '85%',
         },
       }),
     },
@@ -67,23 +69,24 @@ export function NewModelForm({ isOpen, onClose }) {
   return (
     <ChakraProvider theme={theme}>
       <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent width="100%" height="100%" display="flex" alignItems="center">
-          <ModalHeader height="20%">Create a model</ModalHeader>
+        <ModalOverlay/>
+        <ModalContent width="100%" height="80%" minHeight="80%" maxHeight="80%"  display="flex" alignItems="center">
+          <ModalHeader height="10%">Create a model</ModalHeader>
           <ModalCloseButton />
-          <ModalBody width="100%" height="80%" display="flex" alignItems="center">
+          <ModalBody width="100%" height="90%" minHeight="90%"  maxHeight="90%" display="flex" alignItems="center">
             <form className="newModelForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-              <Stack width="100%" height = "100%" spacing="5%" direction="column" display="flex" alignItems="center" justifyContent="flex-start">
-                <FormControl display="flex" flexDirection="column" alignItems="center">
+              <Stack width="100%" height="100%" minHeight = "100%" maxHeight="100%" direction="column" display="flex" alignItems="center" justifyContent="flex-start">
+                <FormControl height="15%" minHeight="15%" maxHeight="15%" display="flex" flexDirection="column" alignItems="center">
                   <FormLabel htmlFor="name">Nombre</FormLabel>
                   <Input
                     id="name"
                     {...register('name', { 
                       required: 'Este campo es requerido'
                     })}
+                    width="90%"
                   />
                 </FormControl>
-                <Stack height="40%" width="95%" direction="row">
+                <Stack height="30%" minHeight="30%" maxHeight="30%" width="95%" direction="row" >
                   <FormControl display="flex" flexDirection="column" alignItems="center">
                     <FormLabel htmlFor="image">Model Image</FormLabel>
                     <Uploader name="image" register={register} setValue={setValue} />
@@ -92,15 +95,16 @@ export function NewModelForm({ isOpen, onClose }) {
                     <FormLabel htmlFor="file">Model File</FormLabel>
                     <Uploader name="file" register={register} setValue={setValue} />
                   </FormControl>
-                  <FormControl display="flex" flexDirection="column" alignItems="center">
-                    <FormLabel htmlFor="file">Submodels</FormLabel>
-                    <Uploader name="submodels" register={register} setValue={setValue} />
-                  </FormControl>
                 </Stack>
+                <FormControl  marginTop="3%" height="30%" minHeight="30%" maxHeight="30%" display="flex" flexDirection="column" alignItems="center">
+                  <FormLabel htmlFor="file">Submodels</FormLabel>
+                  <MultipleUploader name="submodels" register={register}/>
+                </FormControl>
                 <Stack
-                  height="20%"
+                  height="17%"
+                  minHeight="17%"
+                  maxHeight="17%"
                   direction="row"
-                  spacing="24px"
                   display="flex"
                   justifyContent="center"
                   alignContent="center"

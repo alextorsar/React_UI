@@ -36,7 +36,7 @@ export function Model() {
     <React.StrictMode>
       <ChakraProvider>
         <Stack height="100%" width="100%" direction="column" display="flex" alignItems="center" margin="2.5%">
-            <Flex height = "35%" width="80%" direction="row" alignContent="center" justifyContent="center">
+            <Flex height = "35%" width="90%" direction="row" alignContent="center" justifyContent="center">
               {
                 model ?
                 <>
@@ -60,6 +60,7 @@ export function Model() {
                 <></>
               }
             </Flex>
+            <Heading marginBottom="2.5%" marginTop="3%"alignSelf="center" size='md'>Model Variables</Heading>
             <ModelVariablesTable modelId={modelId}></ModelVariablesTable>
           </Stack>
         </ChakraProvider>

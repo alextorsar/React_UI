@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {MdCloudUpload, MdDelete} from 'react-icons/md'
 import './uploader.css'
-import { Input, Stack, Text } from '@chakra-ui/react'
+import { Image, Input, Stack, Text } from '@chakra-ui/react'
 
 export function Uploader({name,register,setValue}) {
     const [file, setFile] = useState(null)
@@ -29,11 +29,11 @@ export function Uploader({name,register,setValue}) {
                 <>
                 {
                     imageInput ?
-                    <img src={file} width="40%" height="40%"/>
+                    <Image src={file} alignSelf="center" height= "60%" marginTop="5%" objectFit="cover"/>
                     :
-                    <img src="/src/images/panel-escrito.png" width="40%" height="40%"/>
+                    <Image src="/src/images/panel-escrito.png" height= "70%" marginTop="5%" objectFit="cover"/>
                 }
-                <Stack direction="row" alignItems="center">
+                <Stack direction="row" alignItems="center" marginTop="auto">
                     <Text>{fileName}</Text>
                     <MdDelete onClick={ () => {
                         setFile(null)

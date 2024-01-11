@@ -30,6 +30,10 @@ export const deleteModel = async (id) => {
 
 export const postModel = async(values) => {
   const requestData = new FormData()
+  var submodels = Array.prototype.slice.call(values.submodels)
+  submodels.forEach((submodel) => {
+    requestData.append('submodels', submodel);
+  });
   requestData.append('name',values.name)
   requestData.append('image',values.image)
   requestData.append('file',values.file)
