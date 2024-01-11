@@ -28,15 +28,17 @@ export function ModelCard({model}){
     }
 
     return (
-        <Card cursor="pointer" size='lg' width="100%" bg="#D6E6F9" border={isSelected ? "2px" : "none"}  borderColor="blue" onClick={handleCardClick} display="flex" alignContent="center">
+        <Card cursor="pointer" size='lg' width="100%" minWidth="100%" maxWidth="100%" height="100%" minHeight="100%" maxHeight="100%" bg="#D6E6F9" border={isSelected ? "2px" : "none"}  borderColor="blue" onClick={handleCardClick} display="flex" alignContent="center">
             <CardBody  display="flex" flexDirection="column">
                 <Image
+                    width="90%" minWidth="90%" maxWidth="90%"
+                    height="80%" minHeight="80%" maxHeight="80%"
                     marginTop="3%"
                     src={route}
                     alt='Model photo'
                     borderRadius='lg'   
-                    height="80%"
                     alignSelf="center"
+                    objectFit="cover"
                 />
                 <Stack mt='6' spacing='3'>
                 <Heading size='md'>{model.name}</Heading>

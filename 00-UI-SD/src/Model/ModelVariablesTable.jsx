@@ -23,7 +23,6 @@ export function ModelVariablesTable({modelId}){
           (response) => {
             if(response.status === 200){
                 setDocumentation(response.data)
-                console.log(response.data)
             }
           }
           ).catch((e) => {
@@ -35,9 +34,8 @@ export function ModelVariablesTable({modelId}){
         {
             documentation ?
             <>
-                <TableContainer  boxShadow="lg" height="65%" width="80%" borderRadius="10px">
-                    <Table variant='unstyled' width="100%" colorScheme="messenger" >
-                        <TableCaption>Model Variables</TableCaption>
+                <TableContainer  marginBottom="5%" boxShadow="lg" height="auto" width="80%" borderRadius="10px">
+                    <Table variant='unstyled' width="100%" height="auto" colorScheme="messenger" >
                         <Thead bgColor="#0078FF">
                         <Tr>
                             <Th color="white">Name</Th>

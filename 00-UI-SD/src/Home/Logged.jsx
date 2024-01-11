@@ -44,7 +44,7 @@ export function Logged(){
   return(
     <React.StrictMode>
       <ChakraProvider>
-        <Flex flexDirection="column" width="100%" justifyContent="center" alignItems="center" backgroundColor="white">
+        <Flex flexDirection="column" height="auto" width="100%" justifyContent="center" alignItems="center" backgroundColor="white">
             <NavBarLogged name={user.name}></NavBarLogged>
             <selectedModelsContext.Provider value={{selectedModels, setSelectedModels, models, setModels, user}}>
               <ModelsSection></ModelsSection>
