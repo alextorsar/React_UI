@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
+import { selectedModelsContext } from '../Home/Logged'
 import { getModel, getImageSrc, getModelDocumentation } from "../../api/models-api"
 import {
   useParams,
@@ -8,11 +9,6 @@ import { ChakraProvider, Stack, Image, Heading, Flex, Button, ButtonGroup } from
 import { ModelVariablesTable } from "./ModelVariablesTable";
 
 export function Model() {
-  var data = [
-    { one: 'one', two: 'two', three: 'three' },
-    { one: 'uno', two: 'dos', three: 'tres' },
-    { one: 'ichi', two: 'ni', three: 'san' }
-  ];
     const navigate = useNavigate()
     const modelId = useParams().modelId
     const [model,setModel] = useState(null)
@@ -35,7 +31,7 @@ export function Model() {
     return (
     <React.StrictMode>
       <ChakraProvider>
-        <Stack height="100%" width="100%" direction="column" display="flex" alignItems="center" margin="2.5%">
+        <Stack height="85%" width="100%" direction="column" display="flex" alignItems="center" margin="2.5%">
             <Flex height = "35%" width="90%" direction="row" alignContent="center" justifyContent="center">
               {
                 model ?

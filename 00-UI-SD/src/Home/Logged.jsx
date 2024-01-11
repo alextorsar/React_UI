@@ -46,7 +46,7 @@ export function Logged(){
       <ChakraProvider>
         <Flex flexDirection="column" width="100%" justifyContent="center" alignItems="center" backgroundColor="white">
             <NavBarLogged name={user.name}></NavBarLogged>
-            <selectedModelsContext.Provider value={{selectedModels, setSelectedModels, models, setModels}}>
+            <selectedModelsContext.Provider value={{selectedModels, setSelectedModels, models, setModels, user}}>
               <ModelsSection></ModelsSection>
               <ModelCardGrid></ModelCardGrid>
             </selectedModelsContext.Provider>
