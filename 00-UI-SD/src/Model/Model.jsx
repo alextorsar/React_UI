@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { getModel, getImageSrc, getModelDocumentation } from "../../api/models-api"
+import { getModel, getImageSrc, getModelExecutionResult } from "../../api/models-api"
 import { getUser } from "../../api/users-api"
 import {
   useParams,
@@ -16,7 +16,13 @@ export function Model() {
     const [model,setModel] = useState(null)
 
     const handleRunButtonClick = () => {
-      console.log("Hola")
+      getModelExecutionResult(modelId).then(
+        (response) => {
+          if(response.status === 200){
+            console.log(response)
+          }
+        }
+      )
     }
     
     var src = ""

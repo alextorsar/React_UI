@@ -48,3 +48,8 @@ export const getModelDocumentation = async (modelId) => {
   const response = await modelsAPI.get("/model/"+modelId+"/documentation/", {withCredentials: true})
   return  response
 }
+
+export const getModelExecutionResult = async (modelId) => {
+  const response = await modelsAPI.get("/model/"+modelId+"/run/", {withCredentials: true})
+  return  response
+}
