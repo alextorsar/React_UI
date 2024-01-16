@@ -56,14 +56,14 @@ export function NewModelForm({ isOpen, onClose }) {
               const model = response.data 
               context.setModels([...context.models, model])
           }
-          toast.promise(promise, {
-            success: { title: 'Success', description: 'Model created succesfully' },
-            error: { title: 'Error', description: 'Something went wrong' },
-            loading: { title: 'Creating model', description: 'Please wait' },
-          })
-          onClose()
       }
-  )
+    )
+    onClose()
+    toast.promise(promise, {
+      success: { title: 'Success', description: 'Model created succesfully' },
+      error: { title: 'Error', description: 'Something went wrong' },
+      loading: { title: 'Creating model', description: 'Please wait' },
+    })
   };
 
   return (
