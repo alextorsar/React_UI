@@ -3,7 +3,8 @@ import {MdCloudUpload, MdDelete} from 'react-icons/md'
 import './uploader.css'
 import { Image, Input, Stack, Text } from '@chakra-ui/react'
 
-export function Uploader({name,register,setValue}) {
+export function Uploader({name,register,setValue, unregister, errors}) {
+    const nameUpperCase = name[0].toUpperCase() + name.slice(1)
     const [file, setFile] = useState(null)
     const [fileName, setFileName] = useState("No selected file")
     var imageInput = true
@@ -18,15 +19,17 @@ export function Uploader({name,register,setValue}) {
                 {...register(name, {
                     onChange: (event) => {
                         var selectedFile = event.target.files[0];
-                        setValue(name, selectedFile);
-                        setFile(URL.createObjectURL(selectedFile))
-                        setFileName(selectedFile.name)
-                    }
+                        if(selectedFile != null){
+                            setFile(URL.createObjectURL(selectedFile))
+                            setFileName(selectedFile.name)
+                        }    
+                    },
+                    required:`${nameUpperCase} is required`
                 })}
                 hidden
             />
             {file ?
-                <Stack display= "flex "direction="column" alignItems="center" height="100%" minHeight="100%" maxHeight="100%">
+                <Stack display= "flex" direction="column" alignItems="center" height="100%" minHeight="100%" maxHeight="100%">
                 {
                     imageInput ?
                     <Image src={file} alignSelf="center" height= "60%" marginTop="5%" objectFit="cover"/>
@@ -38,6 +41,7 @@ export function Uploader({name,register,setValue}) {
                         <MdDelete onClick={ () => {
                             setFile(null)
                             setFileName("No selected file")
+                            unregister(name)
                         }}/>
                     </Stack>
                 </Stack>
@@ -45,6 +49,7 @@ export function Uploader({name,register,setValue}) {
                 <>
                     <MdCloudUpload color="#0078ff" size="40%"/>
                     <Text>Browse files to upload</Text>
+                    <Text color="red">{errors?.message}</Text>
                 </>
             }
         </div>

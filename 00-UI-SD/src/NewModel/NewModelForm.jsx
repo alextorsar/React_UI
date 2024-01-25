@@ -47,23 +47,34 @@ export function NewModelForm({ isOpen, onClose }) {
 
   const context = useContext(selectedModelsContext)
 
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, unregister,formState } = useForm();
+
+  const { errors } = formState
 
   const onSubmit = (values) => {
-    const promise = postModel(values).then(
+    const promise = postModel(values)
+    var toastId = toast(
+      {
+        status:'loading', title: 'Creating model', description: 'Please wait'
+      }
+    )
+    promise.then(
       (response) => {
           if (response.status === 200){
-              const model = response.data 
-              context.setModels([...context.models, model])
+            toast.update(toastId, {status: 'success', title: 'Success', description: 'Model was created successfully'})
+            const model = response.data 
+            context.setModels([...context.models, model])
           }
       }
     )
+    promise.catch(
+      (errors) => {
+        var errorMessage = Object.values(errors.response.data)[0]
+        toast.update(toastId, {status: 'error', title: 'Error', description: errorMessage})
+      }
+    )
     onClose()
-    toast.promise(promise, {
-      success: { title: 'Success', description: 'Model created succesfully' },
-      error: { title: 'Error', description: 'Something went wrong' },
-      loading: { title: 'Creating model', description: 'Please wait' },
-    })
+    unregister(["name","image","file","submodels"])
   };
 
   return (
@@ -79,9 +90,12 @@ export function NewModelForm({ isOpen, onClose }) {
                 <FormControl height="15%" minHeight="15%" maxHeight="15%" display="flex" flexDirection="column" alignItems="center">
                   <FormLabel htmlFor="name">Nombre</FormLabel>
                   <Input
+                    placeholder={errors.name?.message} 
+                    _placeholder={{ color: 'red' }}
                     id="name"
                     {...register('name', { 
-                      required: 'Este campo es requerido'
+                      required: 'Name is required',
+                      pattern: /^[a-zA-Z0-9_ ]+$/
                     })}
                     width="90%"
                   />
@@ -89,16 +103,16 @@ export function NewModelForm({ isOpen, onClose }) {
                 <Stack height="30%" minHeight="30%" maxHeight="30%" width="95%" direction="row" >
                   <FormControl display="flex" flexDirection="column" alignItems="center">
                     <FormLabel height="15%" minHeight="15%" maxHeight="15%" htmlFor="image">Model Image</FormLabel>
-                    <Uploader height="85%" minHeight="85%" maxHeight="85%" name="image" register={register} setValue={setValue} />
+                    <Uploader height="85%" minHeight="85%" maxHeight="85%" name="image" register={register} unregister={unregister} setValue={setValue} errors={errors.image}/>
                   </FormControl>
                   <FormControl display="flex" flexDirection="column" alignItems="center">
                     <FormLabel height="15%" minHeight="15%" maxHeight="15%" htmlFor="file">Model File</FormLabel>
-                    <Uploader height="85%" minHeight="85%" maxHeight="85%" name="file" register={register} setValue={setValue} />
+                    <Uploader height="85%" minHeight="85%" maxHeight="85%" name="file" register={register} unregister={unregister} setValue={setValue} errors={errors.file}/>
                   </FormControl>
                 </Stack>
                 <FormControl  marginTop="5%" height="30%" minHeight="30%" maxHeight="30%" display="flex" flexDirection="column" alignItems="center">
                   <FormLabel htmlFor="file">Submodels</FormLabel>
-                  <MultipleUploader name="submodels" register={register}/>
+                  <MultipleUploader name="submodels" register={register} unregister={unregister}/>
                 </FormControl>
                 <Stack
                   height="15%"

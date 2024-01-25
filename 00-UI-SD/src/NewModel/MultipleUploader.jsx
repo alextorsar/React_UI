@@ -3,7 +3,7 @@ import {MdCloudUpload, MdDelete} from 'react-icons/md'
 import './multipleUploader.css'
 import { Input, Image, Stack, Text, Box, Grid, GridItem } from '@chakra-ui/react'
 
-export function MultipleUploader({name,register}) {
+export function MultipleUploader({name,register,unregister}) {
     const [files, setFiles] = useState([])
     const [fileNames, setFileNames] = useState([])
     return  (

@@ -34,9 +34,13 @@ export const postModel = async(values) => {
   submodels.forEach((submodel) => {
     requestData.append('submodels', submodel);
   });
+  if(values.image != null){
+    requestData.append('image',values.image[0])
+  }
+  if(values.file != null){
+    requestData.append('file',values.file[0])
+  }
   requestData.append('name',values.name)
-  requestData.append('image',values.image)
-  requestData.append('file',values.file)
   const response = await modelsAPI.post("/model/",requestData, {
     headers: {
     'Content-Type': 'multipart/form-data'
