@@ -5,25 +5,17 @@ import {
   useParams,
   useNavigate
 } from "react-router-dom";
-import { ChakraProvider, Stack, Image, Heading, Flex, Button, ButtonGroup } from "@chakra-ui/react";
+import { ChakraProvider, Stack, Image, Heading, Flex, Button, ButtonGroup, useDisclosure } from "@chakra-ui/react";
 import { ModelVariablesTable } from "./ModelVariablesTable";
 import {NavBarLogged} from '../Home/LoggedNavBar/NavBarLogged'
+import {ModelExecutionForm} from '../RunModel/ModelExecutionForm'
 
 export function Model() {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const [user,setUser] = useState({})
     const navigate = useNavigate()
     const modelId = useParams().modelId
     const [model,setModel] = useState(null)
-
-    const handleRunButtonClick = () => {
-      getModelExecutionResult(modelId).then(
-        (response) => {
-          if(response.status === 200){
-            console.log(response)
-          }
-        }
-      )
-    }
     
     var src = ""
     useEffect( () => {
@@ -52,9 +44,9 @@ export function Model() {
     return (
     <React.StrictMode>
       <ChakraProvider>
-      <Stack height="auto" width="100%" direction="column" display="flex" alignItems="center">
-        <NavBarLogged name={user.name}></NavBarLogged>
-        <Stack height="auto" width="100%" direction="column" display="flex" alignItems="center" margin="2.5%"> 
+        <Stack height="auto" width="100%" direction="column" display="flex" alignItems="center">
+          <NavBarLogged name={user.name}></NavBarLogged>
+          <Stack height="auto" width="100%" direction="column" display="flex" alignItems="center" margin="2.5%"> 
             <Flex height="35%" minHeight="35%" maxHeight="35%" width="90%" direction="row" alignContent="center" justifyContent="center">
               {
                 model ?
@@ -73,7 +65,7 @@ export function Model() {
                   <Heading alignSelf="center" size='lg'>{model.name}</Heading>
                   <ButtonGroup width="100%"gap='2' margin="2.5%" display="flex" flexDirection="row" justifyContent="center">
                     <Button width="40%" colorScheme='messenger' borderRadius="25px">Edit model</Button>
-                    <Button width="40%" colorScheme='messenger' borderRadius="25px" onClick={handleRunButtonClick}>Run model</Button>
+                    <Button width="40%" colorScheme='messenger' borderRadius="25px" onClick={onOpen}>Run model</Button>
                 </ButtonGroup>
                 </Stack>
                 </>
@@ -83,9 +75,10 @@ export function Model() {
             </Flex>
             <Heading marginBottom="2.5%" marginTop="3%"alignSelf="center" size='md'>Model Variables</Heading>
             <ModelVariablesTable modelId={modelId}></ModelVariablesTable>
+            <ModelExecutionForm isOpen={isOpen} onClose={onClose}></ModelExecutionForm>
           </Stack>
-          </Stack>
-        </ChakraProvider>
-      </React.StrictMode>
+        </Stack>
+      </ChakraProvider>
+    </React.StrictMode>
     )
 }
