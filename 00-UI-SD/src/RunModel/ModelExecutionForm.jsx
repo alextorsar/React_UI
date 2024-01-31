@@ -17,7 +17,10 @@ import {
     StepTitle,
     Stepper,
     useSteps,
-    Box
+    Box,
+    Button,
+    Stack,
+    ButtonGroup,
 } from '@chakra-ui/react';
 
 const theme = extendTheme({
@@ -55,24 +58,37 @@ export function ModelExecutionForm({ isOpen, onClose }) {
                     <ModalHeader height="10%">Initial Conditions</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody width="100%" height="90%" minHeight="90%"  maxHeight="90%" display="flex" alignItems="center" justifyContent="center">
-                        <Stepper index={activeStep} width="80%">
-                            {steps.map((step, index) => (
-                                <Step key={index}>
-                                <StepIndicator>
-                                    <StepStatus
-                                    complete={<StepIcon />}
-                                    incomplete={<StepNumber />}
-                                    active={<StepNumber />}
-                                    />
-                                </StepIndicator>
-                                <Box flexShrink='0'>
-                                    <StepTitle>{step.title}</StepTitle>
-                                    <StepDescription>{step.description}</StepDescription>
-                                </Box>
-                                <StepSeparator />
-                                </Step>
-                            ))}
-                        </Stepper>
+                    <Stack width="100%" height="100%" minHeight = "100%" maxHeight="100%" direction="column" display="flex" alignItems="center" justifyContent="flex-start">
+                            <Box maxHeight="70%" minHeight="70%" height="70%"></Box>
+                            <Stepper maxHeight="10%" minHeight="10%" height="10%" index={activeStep} width="80%">
+                                {steps.map((step, index) => (
+                                    <Step key={index}>
+                                    <StepIndicator>
+                                        <StepStatus
+                                        complete={<StepIcon />}
+                                        incomplete={<StepNumber />}
+                                        active={<StepNumber />}
+                                        />
+                                    </StepIndicator>
+                                    <Box flexShrink='0'>
+                                        <StepTitle>{step.title}</StepTitle>
+                                        <StepDescription>{step.description}</StepDescription>
+                                    </Box>
+                                    <StepSeparator />
+                                    </Step>
+                                ))}
+                            </Stepper>
+                            <ButtonGroup maxHeight="10%" minHeight="10%" height="10%" width="100%" gap='2' display="flex" alignItems="center" justifyContent="center" margin="2.5">
+                                {
+                                    activeStep > 1 &&
+                                    <Button width="10%" onClick={() => setActiveStep(activeStep - 1)}>Previous</Button>
+                                }
+                                {
+                                    activeStep < 3   &&
+                                    <Button width="10%" onClick={() => setActiveStep(activeStep + 1)} colorScheme='messenger'>{activeStep == 2? "Run" : "Next"}</Button>
+                                }
+                            </ButtonGroup>
+                        </Stack>
                     </ModalBody>
                 </ModalContent>
             </Modal>
