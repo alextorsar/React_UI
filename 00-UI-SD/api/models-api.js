@@ -53,7 +53,11 @@ export const getModelDocumentation = async (modelId) => {
   return  response
 }
 
-export const getModelExecutionResult = async (modelId) => {
-  const response = await modelsAPI.get("/model/"+modelId+"/run/", {withCredentials: true})
+export const getModelExecutionResult = async (modelId, requestData) => {
+  const response = await modelsAPI.post("/model/"+modelId+"/run/",
+    {
+      executionConditions: JSON.stringify(requestData),
+      withCredentials: true
+    })
   return  response
 }

@@ -3,6 +3,7 @@ import { Login } from "./Login/Login"
 import { Register } from "./Register/Register"
 import { Logged } from "./Home/Logged"
 import {Model} from "./Model/Model"
+import { RunModelResult } from "./RunModelResult/RunModelResult"
 import ReactDOM from 'react-dom/client'
 import "./index.css"
 
@@ -15,7 +16,7 @@ function App() {
                 <Route path="/register/*" element={<Register></Register>}></Route>
                 <Route path="/logged/" element={<Logged></Logged>}></Route>
                 <Route path="/model/:modelId" element={<Model></Model>}></Route>
-
+                <Route path="/run/:modelId" element={<RunModelResult></RunModelResult>}></Route>
             </Routes>
         </Router>
     )

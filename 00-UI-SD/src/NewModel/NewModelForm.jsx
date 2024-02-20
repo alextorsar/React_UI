@@ -23,21 +23,21 @@ import { selectedModelsContext } from '../Home/Logged'
 import { Uploader } from './Uploader';
 import { postModel } from '../../api/models-api'
 
-import './NewModelForm.css'
+
+import './ModelForm.css'
 
 const theme = extendTheme({
   components: {
-    Modal: {
-      baseStyle: (props) => ({
-        dialog: {
-          height: '85%',
-          maxWidth: ['65%', '65%', '65%'],
-          minWidth: '65%',
-          maxHeight: ['85%', '85%', '85%'],
-          minHeight: '85%',
-        },
-      }),
-    },
+      Modal: {
+          baseStyle: (props) => ({
+              dialog: {
+                  maxWidth: ['60%', '60%', '60%'],
+                  minWidth: ['60%', '60%', '60%'],
+                  maxHeight: ['40%', '40%', '40%'],
+                  minHeight: ['40%', '40%', '40%'],
+              },
+          }),
+      },
   },
 });
 
@@ -79,13 +79,13 @@ export function NewModelForm({ isOpen, onClose }) {
 
   return (
     <ChakraProvider theme={theme}>
-      <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay/>
         <ModalContent width="100%" height="80%" minHeight="80%" maxHeight="80%"  display="flex" alignItems="center">
           <ModalHeader height="10%">Create a model</ModalHeader>
           <ModalCloseButton />
           <ModalBody width="100%" height="90%" minHeight="90%"  maxHeight="90%" display="flex" alignItems="center">
-            <form className="newModelForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+            <form className="ModelForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
               <Stack width="100%" height="100%" minHeight = "100%" maxHeight="100%" direction="column" display="flex" alignItems="center" justifyContent="flex-start">
                 <FormControl height="15%" minHeight="15%" maxHeight="15%" display="flex" flexDirection="column" alignItems="center">
                   <FormLabel htmlFor="name">Nombre</FormLabel>

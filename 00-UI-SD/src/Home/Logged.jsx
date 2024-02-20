@@ -25,7 +25,7 @@ export function Logged(){
         getUser().then(
           (response) => {
             if(response.status === 200){
-               setUser(response.data)
+              setUser(response.data)
             }
           }
         ).catch(() => {
