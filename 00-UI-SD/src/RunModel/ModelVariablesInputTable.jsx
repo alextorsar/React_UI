@@ -14,23 +14,26 @@ import {
 } from '@chakra-ui/react'
 
 import { useNavigate } from "react-router-dom";
+import { Key } from "@mui/icons-material";
 
 
-export function ModelVariablesInputTable({model, register, unregister, setValue}){
+export function ModelVariablesInputTable({window, model, register, unregister, setValue}){
     const navigate = useNavigate()
     const [documentation,setDocumentation] = useState(null)
 
     useEffect( () => {
-        setDocumentation(model.getVariables())
-        if(documentation === null){
-            navigate('/login')
+        if(window == 'params'){
+            setDocumentation(model.getVariables())
+        }else{
+            setDocumentation(model.getVariablesOfType('Stateful'))
         }
+        
     },[])
     return(
         <>
         {
             documentation ?
-                <TableContainer  marginBottom="5%" boxShadow="lg" height="auto" width="90%" borderRadius="10px" overflowY="scroll">
+                <TableContainer  marginBottom="auto" marginTop="auto" boxShadow="lg" height="auto" width="90%" borderRadius="10px" overflowY="scroll">
                     <Table variant='unstyled' width="100%" height="auto" colorScheme="messenger" >
                         <Thead bgColor="#0078FF">
                         <Tr width="100%">
@@ -43,8 +46,16 @@ export function ModelVariablesInputTable({model, register, unregister, setValue}
                         </Thead>
                         <Tbody bgColor="#F8F8F8">
                         {
+                            
                             documentation.map((variable) => (
-                                <InputTableRow key = {variable.getId()} variable={variable} register={register} unregister={unregister} setValue={setValue}></InputTableRow>
+                                <>
+                                    {
+                                        ((variable.getName() !== "Time")&&(variable.getName() !== "INITIAL TIME")) ? 
+                                            <InputTableRow key = {variable.getId()} variable={variable} register={register} unregister={unregister} setValue={setValue}></InputTableRow>
+                                        : 
+                                            <></>
+                                    }
+                                </>
                             ))
                         }
                         </Tbody>

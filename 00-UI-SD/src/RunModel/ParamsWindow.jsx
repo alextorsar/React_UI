@@ -44,13 +44,13 @@ export function ParamsWindow({model}){
             context.requestData['params'][key]=values[key]
         }
         context.setRequestData(context.requestData)
-        navigate(`/run/${model.getModelId()}/`, { state:  context.requestData })
+        navigate(`/run/${model.getModelId()}/`, { state:  { requestData: context.requestData, model: model.getModelInAPIFormat()}})
     }
 
     return(
         <form className="ModelForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-            <ModelVariablesInputTable model={model} register={register} unregister={unregister} setValue={setValue}></ModelVariablesInputTable>
-            <Stepper maxHeight="10%" minHeight="10%" height="10%" maxWidth="100%" minWidth="100%" width="100%" index={context.activeStep}>
+            <ModelVariablesInputTable window="params" model={model} register={register} unregister={unregister} setValue={setValue}></ModelVariablesInputTable>
+            <Stepper marginTop="5%" maxHeight="10%" minHeight="10%" height="10%" maxWidth="100%" minWidth="100%" width="100%" index={context.activeStep}>
                 {context.steps.map((step, index) => (
                     <Step key={index}>
                         <StepIndicator>

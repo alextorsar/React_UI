@@ -26,9 +26,45 @@ export class SDModel {
     getVariables() {
         return this.variables;
     }
+
+    getVariablesOfType(type){
+        return this.getVariables().filter((variable) => {
+            return variable.getType() === type;
+        })
+    }
+
+    getVariableById(id){
+        return this.getVariables().find((variable) => {
+            return variable.getId() === id;
+        })
+    }
+    getTypesOfVariables() {
+        const types = new Set();
+        this.getVariables().forEach((variable) => {
+            var type = variable.getType()
+            if(type != null){
+                types.add(type)
+            }  
+        })
+        return Array.from(types)
+    }
+
+    getModelInAPIFormat(){
+        var variablesInAPIFormat = []
+        this.variables.forEach((variable) => {
+            variablesInAPIFormat.push(variable.getVariableInAPIFormat()) 
+        })
+        return {
+            'id': this.modelId,
+            'name': this.name,
+            'image': this.imageSrc,
+            'variables': variablesInAPIFormat
+        }
+    }
+
 }
     
-class ModelVariable {
+export class ModelVariable {
     constructor(variableData) {
         this.id = variableData['key']
         this.name = variableData['Real Name'];
@@ -64,5 +100,16 @@ class ModelVariable {
 
     getId() {
         return this.id;
+    }
+
+    getVariableInAPIFormat(){
+        return {
+            'key': this.id,
+            'Real Name': this.name,
+            'Comment': this.comment,
+            'Type': this.type,
+            'Subtype': this.subtype,
+            'Units': this.units
+        }
     }
 }

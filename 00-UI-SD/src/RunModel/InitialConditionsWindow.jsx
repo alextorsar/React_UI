@@ -25,6 +25,7 @@ import '../NewModel/ModelForm.css'
 
 export function InitialConditionsWindow({model}){ 
 
+
     const { register, handleSubmit, setValue, unregister,formState } = useForm();
     const context = useContext(ModelExecutionFormContext)
     
@@ -45,7 +46,7 @@ export function InitialConditionsWindow({model}){
     
     return(
         <form className="ModelForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-            <ModelVariablesInputTable model={model} register={register} unregister={unregister} setValue={setValue}></ModelVariablesInputTable>
+            <ModelVariablesInputTable window="initial_conditions" model={model} register={register} unregister={unregister} setValue={setValue}></ModelVariablesInputTable>
             <Stepper maxHeight="10%" minHeight="10%" height="10%" maxWidth="100%" minWidth="100%" width="100%" index={context.activeStep}>
                 {context.steps.map((step, index) => (
                     <Step key={index}>

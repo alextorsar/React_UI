@@ -9,6 +9,7 @@ import {
     ModalHeader,
     useSteps,
     Stack,
+    Text
 } from '@chakra-ui/react';
 
 import { createContext, useState } from "react"
@@ -81,8 +82,10 @@ export function ModelExecutionForm({ isOpen, onClose, model }) {
                 <ModalOverlay/>
                 <ModalContent width="100%" height="80%" minHeight="80%" maxHeight="80%"  display="flex" alignItems="center">
                     <ModalHeader height="10%">{activeStep == 1 ? "Start time" : activeStep == 2 ? "Initial conditions" : "Params"}</ModalHeader>
+                    {activeStep == 1 ? <Text alignSelf="center" size='md' color="#696969">Set the initial time for the simulation</Text>:<></>}
+                    
                     <ModalCloseButton />
-                    <ModalBody width="100%" height="90%" minHeight="90%"  maxHeight="90%" display="flex" alignItems="center" justifyContent="center">
+                    <ModalBody width="100%" height={activeStep == 1 ? "85%" : "90%"} minHeight={activeStep == 1 ? "85%" : "90%"}  maxHeight={activeStep == 1 ? "85%" : "90%"} display="flex" alignItems="center" justifyContent="center">
                         <Stack width="100%" height="100%" minHeight = "100%" maxHeight="100%" direction="column" display="flex" alignItems="center" justifyContent="flex-start">
                             <ModelExecutionFormContext.Provider value={{steps,activeStep,setActiveStep,requestData,setRequestData}}>
                                 {

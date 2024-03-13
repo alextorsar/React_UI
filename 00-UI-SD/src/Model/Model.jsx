@@ -5,7 +5,7 @@ import {
   useParams,
   useNavigate
 } from "react-router-dom";
-import { ChakraProvider, Stack, Image, Heading, Flex, Button, ButtonGroup, useDisclosure } from "@chakra-ui/react";
+import { ChakraProvider, Stack, Image, Heading, Flex, Button, ButtonGroup, useDisclosure, Text, useFormControlStyles } from "@chakra-ui/react";
 import { ModelVariablesTable } from "./ModelVariablesTable";
 import {NavBarLogged} from '../Home/LoggedNavBar/NavBarLogged'
 import {ModelExecutionForm} from '../RunModel/ModelExecutionForm'
@@ -26,7 +26,7 @@ export function Model() {
             setUser(response.data)
           }
         }
-      ).catch(() => {
+      ).catch((error) => {
         navigate("/login")
       });
       getModel(modelId).then(

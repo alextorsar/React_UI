@@ -47,7 +47,7 @@ const StartTime = () => {
 
     return (
         <form className="ModelForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-            <FormControl height="80%" minHeight="80%" maxHeight="80%" isRequired>
+            <FormControl marginBottom="auto" marginTop="auto" height="20%" minHeight="20%" maxHeight="20%" justifySelf='center' alignSelf='center' isRequired >
                 <FormLabel htmlFor="start_time">Start time</FormLabel>
                 <NumberInput
                     precision={4}

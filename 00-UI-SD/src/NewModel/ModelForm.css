@@ -5,5 +5,9 @@
     max-height: 100%;
     max-width: 100%;
     display: flex;
+    justify-content: flex-end;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
     justify-self: center;
 }
