@@ -48,6 +48,25 @@ export const postModel = async(values) => {
   return response
 }
 
+export const updateModel = async(values,id) => {
+  const requestData = new FormData()
+  requestData.append('id',id)
+  if(values.name != ''){
+    requestData.append('name',values.name)
+  }
+  if(values.image.length > 0){
+    requestData.append('image',values.image[0])
+  }
+  if(values.file.length > 0){
+    requestData.append('file',values.file[0])
+  }
+  const response = await modelsAPI.put("/model/",requestData, {
+    headers: {
+    'Content-Type': 'multipart/form-data'
+  } })
+  return response
+}
+
 export const getModelDocumentation = async (modelId) => {
   const response = await modelsAPI.get("/model/"+modelId+"/documentation/", {withCredentials: true})
   return  response

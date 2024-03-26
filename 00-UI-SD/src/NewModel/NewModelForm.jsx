@@ -88,7 +88,7 @@ export function NewModelForm({ isOpen, onClose }) {
             <form className="ModelForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
               <Stack width="100%" height="100%" minHeight = "100%" maxHeight="100%" direction="column" display="flex" alignItems="center" justifyContent="flex-start">
                 <FormControl height="15%" minHeight="15%" maxHeight="15%" display="flex" flexDirection="column" alignItems="center">
-                  <FormLabel htmlFor="name">Nombre</FormLabel>
+                  <FormLabel htmlFor="name">Name</FormLabel>
                   <Input
                     placeholder={errors.name?.message} 
                     _placeholder={{ color: 'red' }}

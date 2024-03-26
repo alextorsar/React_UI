@@ -10,8 +10,10 @@ import { ModelVariablesTable } from "./ModelVariablesTable";
 import {NavBarLogged} from '../Home/LoggedNavBar/NavBarLogged'
 import {ModelExecutionForm} from '../RunModel/ModelExecutionForm'
 import {SDModel} from './ModelClasses'
+import {UpdateModelForm} from '../UpdateModel/UpdateModelForm'
 
 export function Model() {
+    const updateModalWindow = useDisclosure()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [user,setUser] = useState({})
     const navigate = useNavigate()
@@ -71,7 +73,7 @@ export function Model() {
                   <Stack height="20%" direction="column" display="flex" justifyContent="center" alignContent="center" width="60%" alignSelf="center">
                     <Heading alignSelf="center" size='lg'>{model.getName()}</Heading>
                     <ButtonGroup width="100%"gap='2' margin="2.5%" display="flex" flexDirection="row" justifyContent="center">
-                      <Button width="40%" colorScheme='messenger' borderRadius="25px">Edit model</Button>
+                      <Button width="40%" colorScheme='messenger' borderRadius="25px" onClick={updateModalWindow.onOpen}>Edit model</Button>
                       <Button width="40%" colorScheme='messenger' borderRadius="25px" onClick={onOpen}>Run model</Button>
                     </ButtonGroup>
                   </Stack>
@@ -79,6 +81,7 @@ export function Model() {
                 <Heading marginBottom="2.5%" marginTop="3%"alignSelf="center" size='md'>Model Variables</Heading>
                 <ModelVariablesTable model={model}></ModelVariablesTable>
                 <ModelExecutionForm isOpen={isOpen} onClose={onClose} model={model}></ModelExecutionForm>
+                <UpdateModelForm isOpen={updateModalWindow.isOpen} onClose={updateModalWindow.onClose} model={model} setModel={setModel}></UpdateModelForm>
               </Stack>
             </>
             :

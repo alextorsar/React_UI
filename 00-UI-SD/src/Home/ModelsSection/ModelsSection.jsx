@@ -4,7 +4,11 @@ import React from 'react'
 import { DeleteButton } from './DeleteButton'
 import {NewModelForm} from '../../NewModel/NewModelForm.jsx'
 
-export function ModelsSection(){
+export function ModelsSection({setSearchName}){
+    
+    const handleChange = (event) => {
+        setSearchName(event.target.value)
+    }
     const { isOpen, onOpen, onClose } = useDisclosure()
     return(
         <>
@@ -17,7 +21,7 @@ export function ModelsSection(){
                     <InputLeftElement pointerEvents='none'>
                         <SearchIcon color='gray.300' />
                     </InputLeftElement>
-                    <Input placeholder='Search model...' />
+                    <Input onChange={handleChange} placeholder='Search model...' />
                 </InputGroup>
                 <Spacer/>
                 <ButtonGroup gap='2' margin="2.5%">

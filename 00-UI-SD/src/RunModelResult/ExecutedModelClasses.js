@@ -33,10 +33,11 @@ export class ExecutedModel extends SDModel {
     }
 
     getCharacteristicTime(){
+        console.log(this.executedVariables)
         var i = 0
         var characteristicTime = -1
         while(characteristicTime === -1){
-            if(this.executedVariables[i].getName() == 'Characteristic Time'){
+            if(this.executedVariables[i].getName() == 'TIME STEP'){
                 characteristicTime = this.executedVariables[i].getData()[0]
             }
             i++
@@ -47,8 +48,9 @@ export class ExecutedModel extends SDModel {
     getTimeArray(){
         var time = []
         time[0] = this.getStartTime()
+        var timeStep = this.getCharacteristicTime()
         for(var i=1; i<this.executedVariables[0].getData().length; i++){
-            time[i] = time[i-1] + this.getCharacteristicTime()
+            time[i] = time[i-1] + timeStep
         }
         return time
     }

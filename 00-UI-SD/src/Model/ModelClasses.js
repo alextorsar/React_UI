@@ -5,6 +5,7 @@ export class SDModel {
         this.modelId = modelData.id;
         this.name = modelData.name;
         this.imageSrc = getImageSrc(modelData.image);
+        this.file = modelData.file
         this.variables = []
         variables.forEach((variable) => {
             this.variables.push(new ModelVariable(variable))
@@ -21,6 +22,10 @@ export class SDModel {
 
     getImageSrc() {
         return this.imageSrc;
+    }
+
+    getFile() {
+        return this.file;
     }
 
     getVariables() {
