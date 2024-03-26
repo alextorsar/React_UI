@@ -32,7 +32,11 @@ export function VariablesMenu(){
                                                 ()=>{
                                                     var checkbox = document.getElementById(variable.getId())
                                                     if (checkbox.checked){
-                                                        setSelectedVariables([...selectedVariables, {label: variable.getName(), data: variable.getData(), id: variable.getId()}])
+                                                        var label = variable.getName()
+                                                        if (variable.getUnits() != null){
+                                                            label = label + ' (' + variable.getUnits() + ')'
+                                                        }
+                                                        setSelectedVariables([...selectedVariables, {label: label, data: variable.getData(), id: variable.getId()}])
                                                     }else{
                                                         var restOfVariables = selectedVariables.filter((selectedVariable) => selectedVariable.id != variable.getId());
                                                         setSelectedVariables(restOfVariables)

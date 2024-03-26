@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 
 import { useNavigate } from "react-router-dom";
-import { Key } from "@mui/icons-material";
+
 
 
 export function ModelVariablesInputTable({window, model, register, unregister, setValue}){

@@ -95,8 +95,12 @@ export function RunModelResult(){
             if(executedModel != null){
                 var auxArray = []
                 executedModel.getVariablesOfType('Stateful').forEach(variable => {
+                    var label = variable.getName()
+                    if (variable.getUnits() != null){
+                        label = label + ' (' + variable.getUnits() + ')'
+                    }
                     var selectedVariable = {
-                        label: variable.getName(),
+                        label: label,
                         data: variable.getData(),
                         id: variable.getId(),
                     }
@@ -132,12 +136,27 @@ export function RunModelResult(){
                                                 {
                                                     selectedVariables.map((variable) => {
                                                         var lookedVariable = executedModel.getVariableById(variable.id)
+                                                        var optionsWithUnits = null
+                                                        if (lookedVariable.getUnits() !== null){
+                                                            optionsWithUnits = options
+                                                            optionsWithUnits.scales = {
+                                                                y:{
+                                                                    ticks: {
+                                                                        callback: function(value, index, ticks) {
+                                                                            return value + ' ' + lookedVariable.getUnits();
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+
                                                         return(
                                                             <Box key={variable.id} width="90%" minHeight="90%" height="90%" maxHeight="90%" display="flex" flexDirection="column" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white" borderRadius="10px" margin="2.5%">
                                                                 <Heading marginTop="2%" justifySelf="center" size='sm'>{lookedVariable.getFormattedName()}</Heading>
                                                                 <Text alignSelf="center" size='sm' color="#696969">{lookedVariable.getComment()}</Text>
                                                                 <Box width="95%" height="95%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white">
-                                                                    <Line data={{labels: executedModel.getTimeArray(), datasets: [variable]}} options={options} plugins={plugins}/>
+                                                                    <Line data={{labels: executedModel.getTimeArray(), datasets: [variable]}} options={optionsWithUnits ? optionsWithUnits : options} plugins={plugins}/>
                                                                 </Box>
                                                             </Box>
                                                         )
