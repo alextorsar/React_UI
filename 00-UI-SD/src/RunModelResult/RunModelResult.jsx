@@ -121,7 +121,8 @@ export function RunModelResult(){
                                 <>
                                     <NavBarLogged name={user.name}></NavBarLogged>
                                     <Stack display="flex" direction="row" minWidth="100%" width="100%" maxWidth="100%" minHeight="75%" height="75%" maxHeight="75%" backgroundColor="#F2F2F2"> 
-                                        <VariablesMenu></VariablesMenu>
+                                        
+                                        <VariablesMenu requestData={state.requestData}></VariablesMenu>
                                         {
                                             numberOfCharts === 'Single'?
                                             <Stack display="flex" direction="column" width="70%" height="100%" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center">

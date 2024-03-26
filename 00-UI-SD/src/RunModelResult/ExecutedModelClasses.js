@@ -33,7 +33,6 @@ export class ExecutedModel extends SDModel {
     }
 
     getCharacteristicTime(){
-        console.log(this.executedVariables)
         var i = 0
         var characteristicTime = -1
         while(characteristicTime === -1){
