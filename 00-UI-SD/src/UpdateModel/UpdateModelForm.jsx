@@ -18,16 +18,34 @@ import { useForm } from 'react-hook-form';
 import {UpdateUploader} from './UpdateUploader'
 import {UpdateMultipleUploader} from './UpdateMultipleUploader'
 import '../NewModel/ModelForm.css'
-import { updateModel, getModel, getModelDocumentation } from '../../api/models-api'
+import { updateModel, getModel, getModelDocumentation, getSubModels } from '../../api/models-api'
 import {SDModel} from '../Model/ModelClasses'
+import { useState, useEffect} from 'react';
 
-export function UpdateModelForm({ isOpen, onClose, model, setModel }) {
+function getSubModelsNames(subModels){
+    var subModelsNames = []
+    for (var i = 0; i < subModels.length; i++) {
+        var path = subModels[i].file.split('/')
+        subModelsNames.push(path[path.length-1])
+    }
+    return subModelsNames
+}
+
+export function UpdateModelForm({ isOpen, onClose, model, subModels, setModel, setSubModels }) {
+
+    useEffect(() => {
+            setFileNames(getSubModelsNames(subModels))
+        }, [subModels]
+    )
+
+    const [subModelsFileNames, setFileNames] = useState([])
     const { register, handleSubmit, setValue, unregister,formState } = useForm();
     const { errors } = formState
     var toast = useToast()
 
+
     const onSubmit = (values) => {
-        const promise = updateModel(values,model.getModelId())
+        const promise = updateModel(values,model.getModelId(),subModelsFileNames,subModels)
         var toastId = toast(
             {
                 status:'loading', title: 'Updating model', description: 'Please wait'
@@ -44,6 +62,11 @@ export function UpdateModelForm({ isOpen, onClose, model, setModel }) {
                                 (variablesResponse) => {
                                     if(variablesResponse.status === 200){
                                         setModel(new SDModel(modelResponse.data,variablesResponse.data))
+                                        getSubModels(model.getModelId()).then(
+                                            (subModelsResponse) => {
+                                                setSubModels(subModelsResponse.data)
+                                            }
+                                        )
                                     }
                                 }
                                 )
@@ -60,7 +83,7 @@ export function UpdateModelForm({ isOpen, onClose, model, setModel }) {
             }
         )
         onClose()
-        unregister(["name","image","file"])
+        unregister(["name","image","file","submodels"])
     }
     const theme = extendTheme({
         components: {
@@ -76,9 +99,19 @@ export function UpdateModelForm({ isOpen, onClose, model, setModel }) {
             },
         },
     });
+
+    const closeModal = () => {
+        onClose()
+        unregister(["name","image","file","submodels"])
+        getSubModels(model.getModelId()).then(
+            (subModelsResponse) => {
+                setSubModels(subModelsResponse.data)
+            }
+        )
+    }
     return(
         <ChakraProvider theme={theme}>
-            <Modal isOpen={isOpen} onClose={onClose} isCentered>
+            <Modal isOpen={isOpen} onClose={closeModal} isCentered>
                 <ModalOverlay/>
                 <ModalContent width="100%" height="80%" minHeight="80%" maxHeight="80%"  display="flex" alignItems="center">
                     <ModalHeader height="10%">Update model</ModalHeader>
@@ -109,7 +142,7 @@ export function UpdateModelForm({ isOpen, onClose, model, setModel }) {
                                 </Stack>
                                 <FormControl  marginTop="5%" height="30%" minHeight="30%" maxHeight="30%" display="flex" flexDirection="column" alignItems="center">
                                     <FormLabel htmlFor="file">Submodels</FormLabel>
-                                    <UpdateMultipleUploader name="submodels" register={register} unregister={unregister}/>
+                                    <UpdateMultipleUploader name="submodels" register={register} fileNames={subModelsFileNames} setFileNames={setFileNames}/>
                                 </FormControl>
                                 <Stack
                                     height="15%"

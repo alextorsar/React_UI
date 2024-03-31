@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { getModel, getModelDocumentation } from "../../api/models-api"
+import { getModel, getModelDocumentation, getSubModels } from "../../api/models-api"
 import { getUser } from "../../api/users-api"
 import {
   useParams,
@@ -19,6 +19,7 @@ export function Model() {
     const navigate = useNavigate()
     const modelId = useParams().modelId
     const [model,setModel] = useState(null)
+    const [subModels,setSubModels] = useState([])
     
     var src = ""
     useEffect( () => {
@@ -38,6 +39,11 @@ export function Model() {
               (variablesResponse) => {
                 if(variablesResponse.status === 200){
                   setModel(new SDModel(modelResponse.data,variablesResponse.data))
+                  getSubModels(modelId).then(
+                    (subModelsResponse) => {
+                      setSubModels(subModelsResponse.data)
+                    }
+                  )
                 }
               }
             )
@@ -81,7 +87,7 @@ export function Model() {
                 <Heading marginBottom="2.5%" marginTop="3%"alignSelf="center" size='md'>Model Variables</Heading>
                 <ModelVariablesTable model={model}></ModelVariablesTable>
                 <ModelExecutionForm isOpen={isOpen} onClose={onClose} model={model}></ModelExecutionForm>
-                <UpdateModelForm isOpen={updateModalWindow.isOpen} onClose={updateModalWindow.onClose} model={model} setModel={setModel}></UpdateModelForm>
+                <UpdateModelForm isOpen={updateModalWindow.isOpen} onClose={updateModalWindow.onClose} model={model} subModels={subModels} setModel={setModel} setSubModels={setSubModels}></UpdateModelForm>
               </Stack>
             </>
             :

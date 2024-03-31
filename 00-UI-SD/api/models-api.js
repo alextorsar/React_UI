@@ -18,6 +18,11 @@ export const getModels = async () => {
     return  response
 }
 
+export const getSubModels = async (modelId) => {
+  const response = await modelsAPI.get("/submodel/"+modelId, {withCredentials: true})
+  return  response
+}
+
 export const getImageSrc = (image) => {
   return host + image
 }
@@ -48,8 +53,15 @@ export const postModel = async(values) => {
   return response
 }
 
-export const updateModel = async(values,id) => {
+export const updateModel = async(values,id, newSubModelsName, oldSubModels) => {
   const requestData = new FormData()
+  for (var i = 0; i < oldSubModels.length; i++) {
+    var path = oldSubModels[i].file.split('/')
+    var oldName = path[path.length-1]
+    if(!newSubModelsName.includes(oldName)){
+      requestData.append('subModelsToDelete',oldSubModels[i].id)
+    }
+  }
   requestData.append('id',id)
   if(values.name != ''){
     requestData.append('name',values.name)
@@ -59,6 +71,12 @@ export const updateModel = async(values,id) => {
   }
   if(values.file.length > 0){
     requestData.append('file',values.file[0])
+  }
+  if(values.submodels.length > 0){
+    var submodels = Array.prototype.slice.call(values.submodels)
+    submodels.forEach((submodel) => {
+      requestData.append('submodels', submodel);
+    });
   }
   const response = await modelsAPI.put("/model/",requestData, {
     headers: {
