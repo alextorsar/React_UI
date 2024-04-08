@@ -17,11 +17,15 @@ const theme = extendTheme({
     components: { Accordion: accordionTheme },
 })
 
+function isCustomFunction(param){
+    return param.length != undefined
+}
+
 
 export function VariablesMenu({requestData}){
     const {executedModel, selectedVariables, setSelectedVariables, setNumberOfCharts} = useContext(selectedVariablesContext)
     return(
-        <Box display="flex" flexDirection="column" height="auto" width="30%" backgroundColor="white" alignContent="center" alignItems="center" overflowY="scroll">
+        <Box display="flex" flexDirection="column" height="auto" width="33%" backgroundColor="white" alignContent="center" alignItems="center" overflowY="scroll">
             <Heading margin="2.5%" size='sm'>Number of charts</Heading>
             <Divider width="90%"/>
             <Select  margin="2.5%" width="85%" onChange={(event)=>{setNumberOfCharts(event.target.value)}}>
@@ -33,7 +37,6 @@ export function VariablesMenu({requestData}){
             {
                 executedModel.getTypesOfVariables().map((type) => {
                     return (
-                        
                         <Box display="flex" flexDirection="column" alignItems="center"width="100%" key={type}>
                             <Heading margin="2.5%" color="#696969" size="sm">{type}</Heading>
                             <Box margin='2.5%' width="85%" display="flex" flexDirection="column" border='1px' borderColor='gray.200' borderRadius='10px'>
@@ -47,10 +50,14 @@ export function VariablesMenu({requestData}){
                                                 initialCondition = requestData.initial_condition[variable.getName()]
                                             }
                                             if(variable.getName() in requestData.params){
-                                                param = requestData.params[variable.getName()]
+                                                if(isCustomFunction(requestData.params[variable.getName()])){
+                                                    param = "Custom Function"
+                                                }else{
+                                                    param = requestData.params[variable.getName()]
+                                                }
                                             }
                                             return (
-                                                <AccordionItem>
+                                                <AccordionItem key={variable.getId()}>
                                                     <AccordionButton>
                                                         <Checkbox 
                                                             key={variable.getId()}
