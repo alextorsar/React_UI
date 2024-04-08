@@ -12,9 +12,9 @@ import {
 
 export function NumericInput({ variable, register, setInputValue }) {
     return (
-        <FormControl>
+        <FormControl  minHeight="80%" minWidth="80%" display="flex" flexDirection="column" alignContent="center" justifyContent="center" alignItems="center">
             <FormLabel htmlFor={variable}>Value</FormLabel>
-            <NumberInput precision={4} step={0.0001} id={variable} name={variable} {...register(variable, {valueAsNumber: true})} onChange={(valueString, valueNumber) => {
+            <NumberInput width = "80%" precision={4} step={0.0001} id={variable} name={variable} {...register(variable, {valueAsNumber: true})} onChange={(valueString, valueNumber) => {
                 setInputValue(valueNumber);
             }}>
                 <NumberInputField />

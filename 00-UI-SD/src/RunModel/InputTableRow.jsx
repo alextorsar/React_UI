@@ -38,7 +38,7 @@ export function InputTableRow({variable, register, unregister, setValue}){
                     <Modal closeOnOverlayClick={false} size="md" isOpen={isOpen} onClose={onClose} isCentered>
                         <ModalOverlay />
                         <ModalContent width="100%"  display="flex" alignItems="center">
-                            <ModalHeader>
+                            <ModalHeader paddingBottom="1%">
                                 {variable.getFormattedName()}
                             </ModalHeader>
                             <VariableInput variable={variable.getName()} register={register} setInputValue={setInputValue} onClose={onClose} unregister={unregister} setValue={setValue}></VariableInput>

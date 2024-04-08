@@ -91,10 +91,26 @@ export const getModelDocumentation = async (modelId) => {
 }
 
 export const getModelExecutionResult = async (modelId, requestData) => {
-  const response = await modelsAPI.post("/model/"+modelId+"/run/",
-    {
-      executionConditions: JSON.stringify(requestData),
-      withCredentials: true
-    })
-  return  response
+  var requestDataForm = new FormData()
+  requestDataForm.append('start_time',requestData.start_time)
+  const initial_condition_object = {}
+  const params_object = {}
+  for (var key in requestData.initial_condition){
+    initial_condition_object[key] = requestData.initial_condition[key]
+  }
+  requestDataForm.append('initial_condition',JSON.stringify(initial_condition_object))
+  for (var key in requestData.params){
+    if(requestData.params[key].length == undefined)
+      params_object[key] = requestData.params[key]
+    else{
+      requestDataForm.append(`params[${key}]`,requestData.params[key][0])
+      params_object[key] = {"type":"FileObject", "name":requestData.params[key][0]['name']}
+    }
+  }
+  requestDataForm.append('params',JSON.stringify(params_object))
+  const response = await modelsAPI.post("/model/" + modelId + "/run/",requestDataForm, {
+    headers: {
+    'Content-Type': 'multipart/form-data'
+  } })
+  return response
 }

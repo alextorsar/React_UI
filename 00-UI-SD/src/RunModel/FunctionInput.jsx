@@ -1,94 +1,61 @@
 import React from 'react';
+import {MdCloudUpload, MdDelete} from 'react-icons/md'
 import {
-    Button,
     FormControl,
     FormLabel,
-    NumberInput, 
-    NumberInputField, 
-    NumberInputStepper, 
-    NumberIncrementStepper, 
-    NumberDecrementStepper,
     Stack,
-    Table,
-    TableContainer,
-    Thead,
-    Tr,
-    Th,
-    Tbody,
-    Td // New import
+    Image, 
+    Input, 
+    Text
 } from '@chakra-ui/react';
 
+
 import { useState } from 'react';
+import '../NewModel/Uploader.css'
 
-export function FunctionInput({ functionObject, setFunctionObject}) {
-
-    const [xValue, setXValue] = useState(null)
-    const isXError = xValue === null
-    const [yValue, setYValue] = useState(null)
-    const isYError = yValue === null
-    const [xValuesArray, setXValuesArray] = useState([])
-
-    const addPairOfValues = () => {
-        if (xValue !== null && yValue !== null){
-            if(!(xValue in functionObject)){
-                functionObject[xValue] = yValue
-                setFunctionObject(functionObject)
-                setXValuesArray([...xValuesArray, xValue])
-            }
-        }
-    }
-    
+export function FunctionInput({ variable, register, setInputValue }) {
+    const nameUpperCase = variable[0].toUpperCase() + variable.slice(1)
+    const [file, setFile] = useState(null)
+    const [fileName, setFileName] = useState("No selected file")
     return (
         <>
-            <TableContainer  marginBottom="5%" boxShadow="lg" height="auto" width="60%" borderRadius="10px" overflowY="scroll">
-                        <Table variant='unstyled' width="100%" height="auto" colorScheme="messenger" >
-                            <Thead bgColor="#0078FF">
-                            <Tr width="100%">
-                                <Th color="white" >X Values</Th>
-                                <Th color="white" >Y values</Th>
-                            </Tr>
-                            </Thead>
-                            <Tbody bgColor="#F8F8F8">
-                            {
-                                xValuesArray.map((xValue, index) => {
-                                    return (
-                                        <Tr key={index}>
-                                            <Td>{xValue}</Td>
-                                            <Td>{functionObject[xValue]}</Td>
-                                        </Tr>
-                                    )
-                                })
-                            }
-                            </Tbody>
-                        </Table>
-                    </TableContainer>
-            <Stack direction="row" display="flex" alignItems="center" justifyContent="center">
-                <FormControl width="35%" minWidth="35%" maxWidth="35%" isInvalid={isXError}>
-                    <FormLabel>X value</FormLabel>
-                    <NumberInput precision={4} step={0.0001} id="xValue" name="xValue"
-                        onChange={(valueString, valueNumber) => {if (valueNumber) setXValue(valueNumber)}}
-                    >
-                        <NumberInputField />
-                        <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                        </NumberInputStepper>
-                    </NumberInput>
-                </FormControl >
-                <FormControl width="35%" minWidth="35%" maxWidth="35%" isInvalid={isYError}>
-                    <FormLabel>Y value</FormLabel>
-                    <NumberInput precision={4} step={0.0001} id="yValue" name="yValue"
-                        onChange={(valueString, valueNumber) => {if (valueNumber) setYValue(valueNumber)}}
-                    >
-                        <NumberInputField />
-                        <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                        </NumberInputStepper>
-                    </NumberInput>
-                </FormControl>
-                <Button marginTop="auto" width="20%" minWidth="20%" maxWidth="20%" colorScheme='messenger' onClick={addPairOfValues}>Add pair</Button>
-            </Stack>
+        <FormControl marginTop="3%" display="flex" flexDirection="column" alignContent="center" justifyContent="center" alignItems="center">
+            <FormLabel htmlFor={variable}>Function</FormLabel>
+            <div className='uploaderBox' onClick={() => {document.getElementById(variable).click()}}>
+                <Input
+                    id={variable}
+                    type="file"
+                    {...register(variable, {
+                        onChange: (event) => {
+                            var selectedFile = event.target.files[0];
+                            if(selectedFile != null){
+                                setFile(URL.createObjectURL(selectedFile))
+                                setFileName(selectedFile.name)
+                            }    
+                        },
+                    })}
+                    hidden
+                />
+                {file ?
+                    <Stack display= "flex" direction="column" alignItems="center" height="100%" minHeight="100%" maxHeight="100%">
+                        <Image src="/src/images/panel-escrito-excel.png" maxHeight= "7rem" marginTop="5%" objectFit="cover"/>
+                        <Stack direction="row" alignItems="center" marginTop="auto">
+                            <Text isTruncated>{fileName}</Text>
+                            <MdDelete onClick={ () => {
+                                setFile(null)
+                                setFileName("No selected file")
+                                unregister(variable)
+                            }}/>
+                        </Stack>
+                    </Stack>
+                    :
+                    <>
+                        <MdCloudUpload color="#0078ff" size="30%"/>
+                        <Text>Browse files to upload</Text>
+                    </>
+                }
+            </div>
+        </FormControl>
         </>
     );
 }

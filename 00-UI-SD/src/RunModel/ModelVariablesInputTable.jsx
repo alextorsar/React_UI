@@ -51,7 +51,7 @@ export function ModelVariablesInputTable({window, model, register, unregister, s
                                 <>
                                     {
                                         ((variable.getName() !== "Time")&&(variable.getName() !== "INITIAL TIME")) ? 
-                                            <InputTableRow key = {variable.getId()} variable={variable} register={register} unregister={unregister} setValue={setValue}></InputTableRow>
+                                            <InputTableRow key={variable.getId()} variable={variable} register={register} unregister={unregister} setValue={setValue}></InputTableRow>
                                         : 
                                             <></>
                                     }
