@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {createMultiStyleConfigHelpers, ChakraProvider, Box, Heading, Divider, Select, Checkbox,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,extendTheme} from '@chakra-ui/react';
+import {Tooltip, createMultiStyleConfigHelpers, ChakraProvider, Box, Heading, Divider, Select, Checkbox,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,extendTheme} from '@chakra-ui/react';
 import { selectedVariablesContext } from './RunModelResult'
 import { accordionAnatomy } from '@chakra-ui/anatomy'
 
@@ -57,37 +57,39 @@ export function VariablesMenu({requestData}){
                                                 }
                                             }
                                             return (
-                                                <AccordionItem key={variable.getId()}>
-                                                    <AccordionButton>
-                                                        <Checkbox 
-                                                            key={variable.getId()}
-                                                            id={variable.getId()}
-                                                            margin="2.5%" 
-                                                            onChange={
-                                                                ()=>{
-                                                                    var checkbox = document.getElementById(variable.getId())
-                                                                    if (checkbox.checked){
-                                                                        var label = variable.getName()
-                                                                        if (variable.getUnits() != null){
-                                                                            label = label + ' (' + variable.getUnits() + ')'
-                                                                        }
-                                                                        setSelectedVariables([...selectedVariables, {label: label, data: variable.getData(), id: variable.getId()}])
-                                                                    }else{
-                                                                        var restOfVariables = selectedVariables.filter((selectedVariable) => selectedVariable.id != variable.getId());
-                                                                        setSelectedVariables(restOfVariables)
-                                                                    } 
+                                                <Tooltip label={variable.getFormattedName()} aria-label="A tooltip">
+                                                    <AccordionItem key={variable.getId()} minWidth="100%" maxWidth="100%" width="100%">
+                                                        <AccordionButton>
+                                                            <Checkbox 
+                                                                key={variable.getId()}
+                                                                id={variable.getId()}
+                                                                margin="2.5%"
+                                                                overflow="hidden"                                                        onChange={
+                                                                    ()=>{
+                                                                        var checkbox = document.getElementById(variable.getId())
+                                                                        if (checkbox.checked){
+                                                                            var label = variable.getName()
+                                                                            if (variable.getUnits() != null){
+                                                                                label = label + ' (' + variable.getUnits() + ')'
+                                                                            }
+                                                                            setSelectedVariables([...selectedVariables, {label: label, data: variable.getData(), id: variable.getId()}])
+                                                                        }else{
+                                                                            var restOfVariables = selectedVariables.filter((selectedVariable) => selectedVariable.id != variable.getId());
+                                                                            setSelectedVariables(restOfVariables)
+                                                                        } 
+                                                                    }
                                                                 }
-                                                            }
-                                                            defaultChecked={type === 'Stateful' ? true : false}
-                                                        >
-                                                            {variable.getFormattedName()}
-                                                        </Checkbox>
-                                                        <AccordionIcon/>
-                                                    </AccordionButton>
-                                                    <AccordionPanel>
-                                                        <b>Initial Value:</b> {initialCondition} <b>Param:</b>  {param}
-                                                    </AccordionPanel>
-                                                </AccordionItem>
+                                                                defaultChecked={type === 'Stateful' ? true : false}
+                                                            >
+                                                                {variable.getFormattedName()}
+                                                            </Checkbox>
+                                                            <AccordionIcon/>
+                                                        </AccordionButton>
+                                                        <AccordionPanel>
+                                                            <b>Initial Value:</b> {initialCondition} <b>Param:</b>  {param}
+                                                        </AccordionPanel>
+                                                    </AccordionItem>
+                                                </Tooltip>
                                             )
                                         })
                                     }

@@ -40,6 +40,8 @@ const StartTime = () => {
     const onSubmit = (values) => {
         context.setActiveStep(2)
         context.requestData['start_time'] = values['start_time']
+        context.requestData['final_time'] = values['final_time']
+        context.requestData['time_step'] = values['time_step']
         context.setRequestData(context.requestData)
     }
 
@@ -57,6 +59,44 @@ const StartTime = () => {
                     {...register("start_time")}
                     onChange={(valueString, valueNumber) => {
                         setValue("start_time", valueNumber);
+                    }}
+                >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
+            <FormControl marginBottom="auto" height="20%" minHeight="20%" maxHeight="20%" justifySelf='center' alignSelf='center' isRequired >
+                <FormLabel htmlFor="start_time">Final time</FormLabel>
+                <NumberInput
+                    precision={4}
+                    step={0.0001}
+                    id="start_time"
+                    name="start_time"
+                    {...register("final_time")}
+                    onChange={(valueString, valueNumber) => {
+                        setValue("final_time", valueNumber);
+                    }}
+                >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
+            <FormControl marginBottom="auto" height="20%" minHeight="20%" maxHeight="20%" justifySelf='center' alignSelf='center' isRequired >
+                <FormLabel htmlFor="start_time">Time Step</FormLabel>
+                <NumberInput
+                    precision={4}
+                    step={0.0001}
+                    id="start_time"
+                    name="start_time"
+                    {...register("time_step")}
+                    onChange={(valueString, valueNumber) => {
+                        setValue("time_step", valueNumber);
                     }}
                 >
                     <NumberInputField />

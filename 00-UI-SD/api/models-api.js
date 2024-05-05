@@ -93,6 +93,8 @@ export const getModelDocumentation = async (modelId) => {
 export const getModelExecutionResult = async (modelId, requestData) => {
   var requestDataForm = new FormData()
   requestDataForm.append('start_time',requestData.start_time)
+  requestDataForm.append('final_time',requestData.final_time)
+  requestDataForm.append('time_step',requestData.time_step)
   const initial_condition_object = {}
   const params_object = {}
   for (var key in requestData.initial_condition){

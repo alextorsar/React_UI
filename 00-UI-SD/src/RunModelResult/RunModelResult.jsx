@@ -139,7 +139,7 @@ export function RunModelResult(){
                                                         var lookedVariable = executedModel.getVariableById(variable.id)
                                                         var optionsWithUnits = null
                                                         if (lookedVariable.getUnits() !== null){
-                                                            optionsWithUnits = options
+                                                            optionsWithUnits = {...options}
                                                             optionsWithUnits.scales = {
                                                                 y:{
                                                                     ticks: {

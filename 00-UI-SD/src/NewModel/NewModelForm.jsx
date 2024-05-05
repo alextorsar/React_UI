@@ -55,13 +55,13 @@ export function NewModelForm({ isOpen, onClose }) {
     const promise = postModel(values)
     var toastId = toast(
       {
-        status:'loading', title: 'Creating model', description: 'Please wait'
+        status:'loading', title: 'Creating model', description: 'Please wait', duration: 10000, isClosable: true, 
       }
     )
     promise.then(
       (response) => {
           if (response.status === 200){
-            toast.update(toastId, {status: 'success', title: 'Success', description: 'Model was created successfully'})
+            toast.update(toastId, {status: 'success', title: 'Success', description: 'Model was created successfully',duration: 10000, isClosable: true})
             const model = response.data 
             context.setModels([...context.models, model])
           }
@@ -70,7 +70,7 @@ export function NewModelForm({ isOpen, onClose }) {
     promise.catch(
       (errors) => {
         var errorMessage = Object.values(errors.response.data)[0]
-        toast.update(toastId, {status: 'error', title: 'Error', description: errorMessage})
+        toast.update(toastId, {status: 'error', title: 'Error', description: errorMessage,duration: 10000, isClosable: true})
       }
     )
     onClose()
@@ -95,7 +95,7 @@ export function NewModelForm({ isOpen, onClose }) {
                     id="name"
                     {...register('name', { 
                       required: 'Name is required',
-                      pattern: /^[a-zA-Z0-9_ ]+$/
+                      pattern: /^[a-zA-Z0-9_]+$/
                     })}
                     width="90%"
                   />

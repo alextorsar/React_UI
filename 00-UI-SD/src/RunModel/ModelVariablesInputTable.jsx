@@ -50,7 +50,7 @@ export function ModelVariablesInputTable({window, model, register, unregister, s
                             documentation.map((variable) => (
                                 <>
                                     {
-                                        ((variable.getName() !== "Time")&&(variable.getName() !== "INITIAL TIME")) ? 
+                                        ((variable.getName() !== "Time")&&(variable.getName() !== "INITIAL TIME")&&(variable.getName() !== "FINAL TIME")&&(variable.getName() !== "TIME STEP")) ? 
                                             <InputTableRow key={variable.getId()} variable={variable} register={register} unregister={unregister} setValue={setValue}></InputTableRow>
                                         : 
                                             <></>
