@@ -127,7 +127,7 @@ export function RunModelResult(){
                                             numberOfCharts === 'Single'?
                                             <Stack display="flex" direction="column" width="70%" height="100%"  alignContent="center" alignItems="center" borderRadius="10px">
                                                 <Box display="flex" flexDirection="row" minWidth="100%" width="100%" maxWidth="100%" minHeight="7%" height="7%" maxHeight="7%" backgroundColor="white" justifyContent="center" alignItems="center">
-                                                    <Heading margin="2.5%" size='sm'>Initial conditions:</Heading>
+                                                    <Heading margin="2.5%" size='sm'>Simulation conditions:</Heading>
                                                     <Heading margin="2.5%" color="#696969" size="sm">Initial Time:</Heading>
                                                     <Text>{state.requestData.start_time}</Text>
                                                     <Heading margin="2.5%" color="#696969" size="sm">Final Time:</Heading>
@@ -144,7 +144,7 @@ export function RunModelResult(){
                                             :
                                             <Stack display="flex" direction="column" width="70%" height="100%"  alignContent="center" alignItems="center" overflowY="scroll">
                                                 <Box display="flex" flexDirection="row" minWidth="100%" width="100%" maxWidth="100%" minHeight="7%" height="7%" maxHeight="7%" backgroundColor="white" justifyContent="center" alignItems="center">
-                                                    <Heading margin="2.5%" size='sm'>Initial conditions:</Heading>
+                                                    <Heading margin="2.5%" size='sm'>Simulation conditions:</Heading>
                                                     <Heading margin="2.5%" color="#696969" size="sm">Initial Time:</Heading>
                                                     <Text>{state.requestData.start_time}</Text>
                                                     <Heading margin="2.5%" color="#696969" size="sm">Final Time:</Heading>
