@@ -125,16 +125,35 @@ export function RunModelResult(){
                                         <VariablesMenu requestData={state.requestData}></VariablesMenu>
                                         {
                                             numberOfCharts === 'Single'?
-                                            <Stack display="flex" direction="column" width="70%" height="100%" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center">
+                                            <Stack display="flex" direction="column" width="70%" height="100%"  alignContent="center" alignItems="center" borderRadius="10px">
+                                                <Box display="flex" flexDirection="row" minWidth="100%" width="100%" maxWidth="100%" minHeight="7%" height="7%" maxHeight="7%" backgroundColor="white" justifyContent="center" alignItems="center">
+                                                    <Heading margin="2.5%" size='sm'>Initial conditions:</Heading>
+                                                    <Heading margin="2.5%" color="#696969" size="sm">Initial Time:</Heading>
+                                                    <Text>{state.requestData.start_time}</Text>
+                                                    <Heading margin="2.5%" color="#696969" size="sm">Final Time:</Heading>
+                                                    <Text>{state.requestData.final_time}</Text>
+                                                    <Heading margin="2.5%" color="#696969" size="sm">Time Step:</Heading>
+                                                    <Text>{state.requestData.time_step}</Text>
+                                                </Box>
                                                 <Box width="90%" height="90%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white" borderRadius="10px">
-                                                    <Box width="95%" height="95%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white">
+                                                    <Box width="95%" minHeight="95%" height="95%" maxHeight="95%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white">
                                                         <Line data={{labels: executedModel.getTimeArray(), datasets: selectedVariables}} options={options} plugins={plugins}/>
                                                     </Box>
                                                 </Box>
                                             </Stack>
                                             :
                                             <Stack display="flex" direction="column" width="70%" height="100%"  alignContent="center" alignItems="center" overflowY="scroll">
+                                                <Box display="flex" flexDirection="row" minWidth="100%" width="100%" maxWidth="100%" minHeight="7%" height="7%" maxHeight="7%" backgroundColor="white" justifyContent="center" alignItems="center">
+                                                    <Heading margin="2.5%" size='sm'>Initial conditions:</Heading>
+                                                    <Heading margin="2.5%" color="#696969" size="sm">Initial Time:</Heading>
+                                                    <Text>{state.requestData.start_time}</Text>
+                                                    <Heading margin="2.5%" color="#696969" size="sm">Final Time:</Heading>
+                                                    <Text>{state.requestData.final_time}</Text>
+                                                    <Heading margin="2.5%" color="#696969" size="sm">Time Step:</Heading>
+                                                    <Text>{state.requestData.time_step}</Text>
+                                                </Box>
                                                 {
+                                                    
                                                     selectedVariables.map((variable) => {
                                                         var lookedVariable = executedModel.getVariableById(variable.id)
                                                         var optionsWithUnits = null
