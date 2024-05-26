@@ -49,7 +49,7 @@ export class ExecutedModel extends SDModel {
         time[0] = this.getStartTime()
         var timeStep = this.getCharacteristicTime()
         for(var i=1; i<this.executedVariables[0].getData().length; i++){
-            time[i] = time[i-1] + timeStep
+            time[i] = parseFloat(time[i-1] + timeStep)
         }
         return time
     }

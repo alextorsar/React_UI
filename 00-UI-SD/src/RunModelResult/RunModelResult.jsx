@@ -2,7 +2,7 @@ import { useParams,useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState, createContext } from 'react'
 import {  getModelExecutionResult } from '../../api/models-api'
 import { getUser } from '../../api/users-api'
-import {Box, Stack, ChakraProvider, Heading, Text } from '@chakra-ui/react';
+import {Box, Stack, ChakraProvider, Heading, Text, Button } from '@chakra-ui/react';
 import { Line } from 'react-chartjs-2';
 import {NavBarLogged} from '../Home/LoggedNavBar/NavBarLogged'
 import { 
@@ -14,6 +14,7 @@ import {
     Legend,
     Tooltip,
 } from 'chart.js'
+import { CSVLink } from 'react-csv';
 import {ExecutedModel} from './ExecutedModelClasses'
 import autocolors from 'chartjs-plugin-autocolors';
 import { VariablesMenu } from './VariablesMenu';
@@ -67,6 +68,14 @@ export function RunModelResult(){
         },    
     }
 
+    function getCSVData(timeArray, variableData){
+        var data = []
+        for(var i = 0; i<timeArray.length; i++){
+            data.push({time:timeArray[i],data:variableData[i]})
+        }
+        return data
+    }
+
     useEffect(
         () => {
             getUser().then(
@@ -93,6 +102,7 @@ export function RunModelResult(){
     useEffect(
         () => {
             if(executedModel != null){
+                console.log(executedModel)
                 var auxArray = []
                 executedModel.getVariablesOfType('Stateful').forEach(variable => {
                     var label = variable.getName()
@@ -135,7 +145,7 @@ export function RunModelResult(){
                                                     <Heading margin="2.5%" color="#696969" size="sm">Time Step:</Heading>
                                                     <Text>{state.requestData.time_step}</Text>
                                                 </Box>
-                                                <Box width="90%" height="90%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white" borderRadius="10px">
+                                                <Box width="90%" height="80%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white" borderRadius="10px" margin="auto">
                                                     <Box width="95%" minHeight="95%" height="95%" maxHeight="95%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white">
                                                         <Line data={{labels: executedModel.getTimeArray(), datasets: selectedVariables}} options={options} plugins={plugins}/>
                                                     </Box>
@@ -172,10 +182,21 @@ export function RunModelResult(){
                                                         
 
                                                         return(
-                                                            <Box key={variable.id} width="90%" minHeight="90%" height="90%" maxHeight="90%" display="flex" flexDirection="column" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white" borderRadius="10px" margin="2.5%">
-                                                                <Heading marginTop="2%" justifySelf="center" size='sm'>{lookedVariable.getFormattedName()}</Heading>
-                                                                <Text alignSelf="center" size='sm' color="#696969">{lookedVariable.getComment()}</Text>
-                                                                <Box width="95%" height="95%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white">
+                                                            <Box key={variable.id} width="90%" minHeight="90%" height="90%" display="flex" flexDirection="column" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white" borderRadius="10px" margin="2.5%">
+                                                                <Stack minWidth="100%" width="100%" maxWidth="100%"  display="flex" direction="row" justifyContent="center" justifyItems="center" alignItems="center" marginTop="2.55%">
+                                                                    <Box minWidth="30%" width="30%" maxWidth="30%">
+                                                                    </Box>
+                                                                    <Box minWidth="40%" width="40%" maxWidth="40%">
+                                                                        <Stack display="flex" direction="column" justifyContent="center" justifyItems="center" alignItems="center">
+                                                                            <Heading margin="auto" size='sm'>{lookedVariable.getFormattedName()}</Heading>
+                                                                            <Text textAlign="center" alignSelf="center" alignContent="center" justifyContent="center" justifyItems="center" justifySelf="center" size='sm' color="#696969">{lookedVariable.getComment()}</Text>
+                                                                        </Stack>
+                                                                    </Box>
+                                                                    <Box minWidth="30%" width="30%" maxWidth="30%" display="flex" justifyContent="flex-end" marginRight="10%">
+                                                                        <CSVLink data={getCSVData(executedModel.getTimeArray(),variable.data )} filename={lookedVariable.getName() + '.csv'} headers={[{label:"time",key:"time"},{label:lookedVariable.getName(),key:"data"}]}><Button  height="60%" colorScheme='messenger' alignSelf="center" justifySelf="center" margin="10%" borderRadius="25px">Donwload CSV</Button></CSVLink>
+                                                                    </Box>
+                                                                </Stack>
+                                                                <Box width="95%" height="92%" display="flex" justifyContent="center" justifyItems="center" alignContent="center" alignItems="center" backgroundColor="white">
                                                                     <Line data={{labels: executedModel.getTimeArray(), datasets: [variable]}} options={optionsWithUnits ? optionsWithUnits : options} plugins={plugins}/>
                                                                 </Box>
                                                             </Box>
