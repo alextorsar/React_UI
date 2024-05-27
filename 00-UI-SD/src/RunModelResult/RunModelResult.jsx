@@ -2,7 +2,7 @@ import { useParams,useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState, createContext } from 'react'
 import {  getModelExecutionResult } from '../../api/models-api'
 import { getUser } from '../../api/users-api'
-import {Box, Stack, ChakraProvider, Heading, Text, Button } from '@chakra-ui/react';
+import {Box, Stack, ChakraProvider, Heading, Text, Button, useToast } from '@chakra-ui/react';
 import { Line } from 'react-chartjs-2';
 import {NavBarLogged} from '../Home/LoggedNavBar/NavBarLogged'
 import { 
@@ -26,6 +26,18 @@ export const selectedVariablesContext = createContext()
 export function RunModelResult(){
     const {state} = useLocation();   
     const [executedModel, setExecutedModel] = useState(null)
+    const toast = useToast()
+    const id = 1
+    if(!toast.isActive(id) && executedModel == null){
+        toast({
+            id,
+            title: 'Executing model',
+            description: 'Please wait',
+            status: 'loading',
+            duration: 1000000,
+            isClosable: true,
+        })
+    }
     const [selectedVariables, setSelectedVariables] = useState(null)
     const [user,setUser] = useState({})
     const [numberOfCharts, setNumberOfCharts] = useState('Single')
@@ -69,7 +81,6 @@ export function RunModelResult(){
     }
 
     function getMultipleCSVData(timeArray){
-        console.log(selectedVariables)
         var data = []
         for(var i = 0; i<timeArray.length; i++){
             var row = {time:timeArray[i]}
@@ -90,7 +101,6 @@ export function RunModelResult(){
     }
 
     function getCSVData(timeArray, variableData){
-        console.log(selectedVariables)
         var data = []
         for(var i = 0; i<timeArray.length; i++){
             data.push({time:timeArray[i],data:variableData[i]})
@@ -110,10 +120,14 @@ export function RunModelResult(){
                 navigate("/login")
             });
             if(executedModel == null){
-                getModelExecutionResult(modelId,state.requestData).then(
+                var promise = getModelExecutionResult(modelId,state.requestData)
+                promise.then(
                     (response) => {
                         if(response.status === 200){
                             setExecutedModel(new ExecutedModel(state.model,state.model.variables, response.data))
+                            toast.update(id, {status: 'success', title: 'Model executed correctly', description: 'Model was executed successfully',duration: 1000000, isClosable: true})
+                        }else{
+                            toast.update(id, {status: 'error', title: 'Error', description: 'Model could not be executed',duration: 1000000, isClosable: true})
                         }
                     }
                 )
