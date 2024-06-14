@@ -16,6 +16,7 @@ import {
   useToast
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
+import {ALLOW_REGISTER} from '../app'
 
 
 
@@ -73,7 +74,13 @@ export function LoginBox() {
           </FormControl>
           <Button type="submit" width="35%" colorScheme='messenger' alignSelf="center" justifySelf="center" margin="10%" borderRadius="25px">Log in</Button>
         </form>
-        <Text>Don't have an account? <Link to="/register"><b>Sign Up</b></Link></Text>
+        {
+          ALLOW_REGISTER ? 
+          <Text>Don't have an account? <Link to="/register"><b>Sign Up</b></Link></Text>
+          :
+          <></>
+        }
+        
       </div>
     </Box>
   )
