@@ -7,7 +7,7 @@ import { RunModelResult } from "./RunModelResult/RunModelResult"
 import ReactDOM from 'react-dom/client'
 import "./index.css"
 export const ALLOW_REGISTER = true
-export const ONLY_ADMIN_CAN_CREATE_MODELS = true
+export const ONLY_ADMIN_CAN_CREATE_MODELS = false
 
 function App() {
     if (ALLOW_REGISTER) {
