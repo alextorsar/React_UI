@@ -48,7 +48,7 @@ export function Logged(){
         <Flex flexDirection="column" height="auto" width="100%" justifyContent="center" alignItems="center" backgroundColor="white">
             <NavBarLogged name={user.name}></NavBarLogged>
             <selectedModelsContext.Provider value={{selectedModels, setSelectedModels, models, setModels, user}}>
-              <ModelsSection setSearchName={setSearchName}></ModelsSection>
+              <ModelsSection setSearchName={setSearchName} admin={user.admin}></ModelsSection>
               <ModelCardGrid searchName={searchName}></ModelCardGrid>
             </selectedModelsContext.Provider>
         </Flex> 

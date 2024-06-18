@@ -3,9 +3,9 @@ import { Flex, Heading, Spacer, Button,ButtonGroup, InputGroup, InputLeftElement
 import React from 'react'
 import { DeleteButton } from './DeleteButton'
 import {NewModelForm} from '../../NewModel/NewModelForm.jsx'
+import {ONLY_ADMIN_CAN_CREATE_MODELS} from '../../app.jsx'
 
-export function ModelsSection({setSearchName}){
-    
+export function ModelsSection({setSearchName,admin}){
     const handleChange = (event) => {
         setSearchName(event.target.value)
     }
@@ -24,10 +24,13 @@ export function ModelsSection({setSearchName}){
                     <Input onChange={handleChange} placeholder='Search model...' />
                 </InputGroup>
                 <Spacer/>
-                <ButtonGroup gap='2' margin="2.5%">
-                    <DeleteButton></DeleteButton>
-                    <Button onClick={onOpen} leftIcon={<AddIcon />} colorScheme='messenger'>New model</Button>
-                </ButtonGroup>
+                {
+                    ONLY_ADMIN_CAN_CREATE_MODELS && !admin ? <></> :
+                    <ButtonGroup gap='2' margin="2.5%">
+                        <DeleteButton></DeleteButton>
+                        <Button onClick={onOpen} leftIcon={<AddIcon />} colorScheme='messenger'>New model</Button>
+                    </ButtonGroup>
+                }
             </Flex>
             <NewModelForm isOpen={isOpen} onClose={onClose}></NewModelForm>
         </>

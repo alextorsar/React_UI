@@ -11,6 +11,7 @@ import {NavBarLogged} from '../Home/LoggedNavBar/NavBarLogged'
 import {ModelExecutionForm} from '../RunModel/ModelExecutionForm'
 import {SDModel} from './ModelClasses'
 import {UpdateModelForm} from '../UpdateModel/UpdateModelForm'
+import {ONLY_ADMIN_CAN_CREATE_MODELS} from '../app'
 
 export function Model() {
     const updateModalWindow = useDisclosure()
@@ -79,7 +80,10 @@ export function Model() {
                   <Stack height="20%" direction="column" display="flex" justifyContent="center" alignContent="center" width="60%" alignSelf="center">
                     <Heading alignSelf="center" size='lg'>{model.getName()}</Heading>
                     <ButtonGroup width="100%"gap='2' margin="2.5%" display="flex" flexDirection="row" justifyContent="center">
-                      <Button width="40%" colorScheme='messenger' borderRadius="25px" onClick={updateModalWindow.onOpen}>Edit model</Button>
+                      {
+                        ONLY_ADMIN_CAN_CREATE_MODELS && !user.admin ? <></> : 
+                        <Button width="40%" colorScheme='messenger' borderRadius="25px" onClick={updateModalWindow.onOpen}>Edit model</Button>
+                      }
                       <Button width="40%" colorScheme='messenger' borderRadius="25px" onClick={onOpen}>Run model</Button>
                     </ButtonGroup>
                   </Stack>
